@@ -16,7 +16,7 @@ class VoiceResource extends JsonResource
     public function toArray($request)
     {
 
-        if(Str::contains('http',$this->photo)){
+        if(Str::contains($this->photo,'http')){
             $photo = $this->photo;
         }else{
             $photo = asset('storage/'.$this->photo);

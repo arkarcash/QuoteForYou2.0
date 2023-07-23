@@ -46,11 +46,11 @@ class UserSeeder extends Seeder
 //            }
 //        });
 
-        $Cusers = User::get()->take(5);
-
-        foreach ($Cusers as $user){
-            $this->addPoint($user['id']);
-        }
+//        $Cusers = User::get()->take(5);
+//
+//        foreach ($Cusers as $user){
+//            $this->addPoint($user['id']);
+//        }
     }
 
     public function addPoint($id)

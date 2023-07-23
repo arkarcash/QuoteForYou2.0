@@ -55,6 +55,7 @@ class DatabaseSeeder extends Seeder
             NoteSeeder::class,
             AuthorSeeder::class,
             UserSeeder::class,
+            VoiceSeeder::class
         ]);
 
 

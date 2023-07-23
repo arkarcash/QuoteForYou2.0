@@ -26,7 +26,7 @@ class BookController extends Controller
             ->when(isset($request->is_premium),function ($q) use ($request){
                 return $q->where('is_premium',$request->is_premium);
             })->paginate(10);
-//return $books;
+
         $meta = [
             'total' => $books->total(),
             'current_page' => $books->currentPage(),
@@ -53,10 +53,17 @@ class BookController extends Controller
         if($check){
             $book =  $user->books()->where('book_id',$book_id)->withPivot('expire_date','created_at')->first();
 
-            $date = Carbon::make($book->pivot->expire_date)->addWeek();
+            $date = Carbon::make($book->pivot->expire_date);
             $primaryDate = $book->pivot->created_at;
             $user->books()->detach($book_id);
-            $user->books()->attach( $book_id , ['expire_date' => $date,'created_at' => $primaryDate , 'updated_at' => now()]);
+
+
+            if ($date->gte(today())){
+                $user->books()->attach( $book_id , ['expire_date' => $date->addWeek(),'created_at' => $primaryDate , 'updated_at' => now()]);
+            }else{
+                $user->books()->attach( $book_id , ['expire_date' => now()->addWeek(),'created_at' => now() , 'updated_at' => now()]);
+            }
+
 
             return $this->success('Add One Week!');
 
