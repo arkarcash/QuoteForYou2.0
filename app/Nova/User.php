@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rules;
 use Laravel\Nova\Fields\Gravatar;
+use Laravel\Nova\Fields\HasOne;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Image;
 use Laravel\Nova\Fields\Number;
@@ -50,18 +51,17 @@ class User extends Resource
         return [
             ID::make()->sortable(),
 
-            Image::make('photo')->disk('public')
-                ->path('user')
+            Image::make('photo')
+                ->path('kok')
                 ->storeAs(function (Request $request) {
                     return Str::replace(' ','_',$request->photo->getClientOriginalName());
                 })
                 ->preview(function ($value, $disk) {
                     return $value
-                        ? Storage::disk($disk)->url($value)
+                        ? '/Ranks/'.$value
                         : null;
                 })
-                ->prunable()
-                ->creationRules('required','image'),
+                ->prunable()->hideWhenCreating()->hideWhenUpdating(),
 
 
             Text::make('Name')
@@ -81,6 +81,8 @@ class User extends Resource
                     'color:#fab01b; font-weight:bold;font-size:18',
                 );
             })->asHtml(),
+
+            HasOne::make('certificate')->showOnDetail()->hideWhenCreating()->hideWhenUpdating(),
 
             Number::make('Point','points')->hideFromDetail()->hideFromIndex(),
 

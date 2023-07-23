@@ -6,6 +6,7 @@ use App\Nova\Ads;
 use App\Nova\Author;
 use App\Nova\Banner;
 use App\Nova\Book;
+use App\Nova\BookCategory;
 use App\Nova\Note;
 use App\Nova\Category;
 use App\Nova\Dashboards\Main;
@@ -48,6 +49,7 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
                 MenuSection::resource(User::class)->icon('user-group'),
                 MenuSection::resource(Ads::class)->icon('currency-dollar'),
                 MenuSection::make('Book', [
+                    MenuItem::resource(BookCategory::class),
                     MenuItem::resource(Book::class),
                 ])->icon('credit-card')->collapsable(),
 

@@ -52,7 +52,7 @@ class Book extends Resource
             ID::make()->sortable(),
             Text::make('Title','title')->rules('required'),
             Markdown::make('Description','description')->rules('required'),
-            BelongsTo::make('Voice Category','voiceCategory'),
+            BelongsTo::make('Book Category','bookCategory')->searchable(),
             Boolean::make('Premium ?','is_premium')->rules('required'),
             Number::make('Points','points')->rules('nullable'),
             Text::make('Link Download','link')->rules('nullable')->hideFromIndex(),

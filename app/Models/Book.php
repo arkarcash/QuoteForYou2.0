@@ -9,13 +9,13 @@ class Book extends Model
 {
     use HasFactory;
 
-    public function voiceCategory()
+    public function bookCategory()
     {
-        return $this->belongsTo(VoiceCategory::class)->withTrashed();
+        return $this->belongsTo(BookCategory::class)->withTrashed();
     }
 
     public function users()
     {
-        return $this->belongsToMany(User::class);
+        return $this->belongsToMany(User::class)->withPivot('expire_date');
     }
 }

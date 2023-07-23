@@ -7,6 +7,7 @@ use App\Http\Helper\ResponseHelper;
 use App\Http\Resources\BookResource;
 use App\Models\Book;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -15,26 +16,24 @@ class BookController extends Controller
     use ResponseHelper;
     public function books(Request $request)
     {
-        $voices = Book::with('voiceCategory')
+        $books = Book::with('bookCategory')
             ->when(isset($request->category_id),function ($q) use ($request){
-                return $q->where('voice_category_id',$request->category_id);
+                return $q->where('book_category_id',$request->category_id);
             })
-            ->when(Auth::guard('sanctum')->check(),function ($q) use ($request){
-                return $q->withCount(['users' => function($u){
-                    return $u->where('user_id',Auth::guard('sanctum')->id());
-                }]);
-            })
+           ->with(['users' => function($u){
+               return $u->where('user_id',Auth::guard('sanctum')->id())->wherePivot('expire_date','>=',today());
+           }])
             ->when(isset($request->is_premium),function ($q) use ($request){
                 return $q->where('is_premium',$request->is_premium);
             })->paginate(10);
-//return $voices;
+//return $books;
         $meta = [
-            'total' => $voices->total(),
-            'current_page' => $voices->currentPage(),
-            'last_page' => $voices->lastPage(),
-            'has_more_page' => $voices->hasMorePages()
+            'total' => $books->total(),
+            'current_page' => $books->currentPage(),
+            'last_page' => $books->lastPage(),
+            'has_more_page' => $books->hasMorePages()
         ];
-        return $this->success(BookResource::collection($voices),$meta);
+        return $this->success(BookResource::collection($books),$meta);
     }
 
 
@@ -52,11 +51,17 @@ class BookController extends Controller
         })->exists();
 
         if($check){
+            $book =  $user->books()->where('book_id',$book_id)->withPivot('expire_date','created_at')->first();
+
+            $date = Carbon::make($book->pivot->expire_date)->addWeek();
+            $primaryDate = $book->pivot->created_at;
             $user->books()->detach($book_id);
-            return $this->success('removed!');
+            $user->books()->attach( $book_id , ['expire_date' => $date,'created_at' => $primaryDate , 'updated_at' => now()]);
+
+            return $this->success('Add One Week!');
 
         }else{
-            $user->books()->attach($book_id);
+            $user->books()->attach( $book_id , ['expire_date' => now()->addWeek(),'created_at' => now() , 'updated_at' => now()]);
             return $this->success('saved!');
         }
 
@@ -71,11 +76,10 @@ class BookController extends Controller
             ->whereHas('users',function($u){
                 return $u->where('user_id',Auth::guard('sanctum')->id());
             })
-            ->withCount(['users' => function($u){
-                return $u->where('user_id',Auth::guard('sanctum')->id());
+            ->with(['users' => function($u){
+                return $u->where('user_id',Auth::guard('sanctum')->id())->wherePivot('expire_date','>=',today());
             }])
             ->paginate(10);
-
         $meta = [
             'total' => $quote->total(),
             'current_page' => $quote->currentPage(),

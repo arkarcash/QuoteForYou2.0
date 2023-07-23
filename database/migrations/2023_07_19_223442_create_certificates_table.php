@@ -18,6 +18,7 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained('users','id')->cascadeOnUpdate()->cascadeOnDelete();
             $table->string('contributor')->nullable();
             $table->string('rising_star')->nullable();
+            $table->string('mentor')->nullable();
             $table->string('guru')->nullable();
             $table->string('mystery')->nullable();
             $table->string('creator')->nullable();

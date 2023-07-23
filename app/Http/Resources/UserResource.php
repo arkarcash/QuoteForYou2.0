@@ -15,11 +15,8 @@ class UserResource extends JsonResource
      */
     public function toArray($request)
     {
-        if($this->photo == null){
-            $photo = 'https://cdn3d.iconscout.com/3d/premium/thumb/afro-avatar-6299534-5187866.png';
-        }else{
-            $photo = asset('storage/'.$this->photo);
-        }
+
+        $photo = asset('Ranks/'.$this->photo);
         return [
             "id" => $this->id,
             "name" => $this->name,

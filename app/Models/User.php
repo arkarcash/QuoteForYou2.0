@@ -21,6 +21,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'points'
     ];
 
     /**
@@ -50,5 +51,10 @@ class User extends Authenticatable
     public function books()
     {
         return $this->belongsToMany(Book::class);
+    }
+
+    public function certificate()
+    {
+        return $this->hasOne(Certificate::class);
     }
 }

@@ -36,6 +36,12 @@ return [
             'throw' => false,
         ],
 
+        'ranks' => [
+            'driver' => 'local',
+            'root' => public_path('Ranks'),
+            'throw' => false,
+        ],
+
         'public' => [
             'driver' => 'local',
             'root' => storage_path('app/public'),

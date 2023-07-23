@@ -6,14 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Tag extends Model
+class BookCategory extends Model
 {
     use HasFactory,SoftDeletes;
-
-    protected $fillable = ['name'];
-
-    public function notes()
-    {
-        return $this->belongsToMany(Note::class)->withPivot('note_id','tag_id','name');
-    }
 }

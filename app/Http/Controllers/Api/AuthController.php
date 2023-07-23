@@ -136,66 +136,85 @@ class AuthController extends Controller
         switch ($user->points){
             case 500:
                 if ($certificate->contributor == null ){
+                    $user->photo = '1_contributor.png';
+                    $user->update();
                     $certificateBg = Image::make('CertificateFrame/'.$bgFrames[0]);
                     self::makeCertificate($certificateBg,$certificate,'contributor',$fontForLevelOneToFive,$fontSizeForLevelOneToFive,$leftDateWidthForLevelOneToFive);
                 }
             break;
             case 1500:
                 if ($certificate->rising_star == null ){
+                    $user->photo = '2_rising_star.png';
+                    $user->update();
                     $certificateBg = Image::make('CertificateFrame/'.$bgFrames[1]);
-                    self::makeCertificate($certificateBg,$certificate,'contributor',$fontForLevelOneToFive,$fontSizeForLevelOneToFive,$leftDateWidthForLevelOneToFive);
+                    self::makeCertificate($certificateBg,$certificate,'rising_star',$fontForLevelOneToFive,$fontSizeForLevelOneToFive,$leftDateWidthForLevelOneToFive);
                 }
                 break;
             case 3000:
                 if ($certificate->guru == null ){
+                    $user->photo = '3_mentor.png';
+                    $user->update();
                     $certificateBg = Image::make('CertificateFrame/'.$bgFrames[2]);
-                    self::makeCertificate($certificateBg,$certificate,'contributor',$fontForLevelOneToFive,$fontSizeForLevelOneToFive,$leftDateWidthForLevelOneToFive);
+                    self::makeCertificate($certificateBg,$certificate,'mentor',$fontForLevelOneToFive,$fontSizeForLevelOneToFive,$leftDateWidthForLevelOneToFive);
                 }
                 break;
             case 6000:
                 if ($certificate->mentor == null ){
+                    $user->photo = '4_guru.png';
+                    $user->update();
                     $certificateBg = Image::make('CertificateFrame/'.$bgFrames[3]);
-                    self::makeCertificate($certificateBg,$certificate,'contributor',$fontForLevelOneToFive,$fontSizeForLevelOneToFive,$leftDateWidthForLevelOneToFive);
+                    self::makeCertificate($certificateBg,$certificate,'guru',$fontForLevelOneToFive,$fontSizeForLevelOneToFive,$leftDateWidthForLevelOneToFive);
                 }
                 break;
             case 10000:
                 if ($certificate->mystery == null ){
+                    $user->photo = '5_mystery.png';
+                    $user->update();
                     $certificateBg = Image::make('CertificateFrame/'.$bgFrames[4]);
-                    self::makeCertificate($certificateBg,$certificate,'contributor',$fontForLevelOneToFive,$fontSizeForLevelOneToFive,$leftDateWidthForLevelOneToFive);
+                    self::makeCertificate($certificateBg,$certificate,'mystery',$fontForLevelOneToFive,$fontSizeForLevelOneToFive,$leftDateWidthForLevelOneToFive);
                 }
                 break;
             case 20000:
                 if ($certificate->creator == null ){
+                    $user->photo = '6_Creator.png';
+                    $user->update();
                     $certificateBg = Image::make('CertificateFrame/'.$bgFrames[5]);
-                    self::makeCertificate($certificateBg,$certificate,'contributor',$fontForLevelFiveToTen,$fontSizeForLevelFiveToTen,$leftDateWidthForLevelFiveToTen);
+                    self::makeCertificate($certificateBg,$certificate,'creator',$fontForLevelFiveToTen,$fontSizeForLevelFiveToTen,$leftDateWidthForLevelFiveToTen);
                 }
                 break;
             case 40000:
                 if ($certificate->specialist == null ){
+                    $user->photo = '7_Specialist.png';
+                    $user->update();
                     $certificateBg = Image::make('CertificateFrame/'.$bgFrames[6]);
-                    self::makeCertificate($certificateBg,$certificate,'contributor',$fontForLevelFiveToTen,$fontSizeForLevelFiveToTen,$leftDateWidthForLevelFiveToTen);
+                    self::makeCertificate($certificateBg,$certificate,'specialist',$fontForLevelFiveToTen,$fontSizeForLevelFiveToTen,$leftDateWidthForLevelFiveToTen);
                 }
                 break;
             case 80000:
                 if ($certificate->collaborator == null ){
+                    $user->photo = '8_Collaborator.png';
+                    $user->update();
                     $certificateBg = Image::make('CertificateFrame/'.$bgFrames[7]);
-                    self::makeCertificate($certificateBg,$certificate,'contributor',$fontForLevelFiveToTen,$fontSizeForLevelFiveToTen,$leftDateWidthForLevelFiveToTen);
+                    self::makeCertificate($certificateBg,$certificate,'collaborator',$fontForLevelFiveToTen,$fontSizeForLevelFiveToTen,$leftDateWidthForLevelFiveToTen);
                 }
                 break;
             case 130000:
                 if ($certificate->authority == null ){
+                    $user->photo = '9_Authority.png';
+                    $user->update();
                     $certificateBg = Image::make('CertificateFrame/'.$bgFrames[8]);
-                    self::makeCertificate($certificateBg,$certificate,'contributor',$fontForLevelFiveToTen,$fontSizeForLevelFiveToTen,$leftDateWidthForLevelFiveToTen);
+                    self::makeCertificate($certificateBg,$certificate,'authority',$fontForLevelFiveToTen,$fontSizeForLevelFiveToTen,$leftDateWidthForLevelFiveToTen);
                 }
                 break;
             case 200000:
                 if ($certificate->legend == null ){
+                    $user->photo = '10_Legend.png';
+                    $user->update();
                     $certificateBg = Image::make('CertificateFrame/'.$bgFrames[9]);
-                    self::makeCertificate($certificateBg,$certificate,'contributor',$fontForLevelFiveToTen,$fontSizeForLevelFiveToTen,$leftDateWidthForLevelFiveToTen);
+                    self::makeCertificate($certificateBg,$certificate,'legend',$fontForLevelFiveToTen,$fontSizeForLevelFiveToTen,$leftDateWidthForLevelFiveToTen);
                 }
                 break;
         }
-
 
         return $this->success(UserResource::make(Auth::user()->refresh()));
     }
@@ -206,7 +225,7 @@ class AuthController extends Controller
             Storage::makeDirectory("public/certificates");
         }
 
-        $uniqueID = " CLICK-FOR-FREEDOM - ".Str::orderedUuid();
+        $uniqueID = "CLICK_FOR_FREEDOM_".Str::orderedUuid();
         $name = Str::ucfirst(Auth::guard('sanctum')->user()->name);
         $date = now()->format('d F, Y');
         $main = $imagePath
@@ -226,7 +245,7 @@ class AuthController extends Controller
         $name = $path.$uniqueID.'.png';
         $main->save($name,100);
 
-        $certificate->$levelName = $uniqueID;
+        $certificate->$levelName = $uniqueID.'.png';
         $certificate->update();
 
         return true;
@@ -248,10 +267,7 @@ class AuthController extends Controller
             return $this->fail('User Not Found');
         }
 
-        $orders = Order::where('user_id',$id)->get();
-
-        $orders->each->delete();
-        $user->forceDelete();
+        $user->delete();
 
         return $this->success("$user->name is deleted!");
 

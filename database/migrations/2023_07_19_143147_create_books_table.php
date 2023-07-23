@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('title');
             $table->longText('description');
-            $table->bigInteger('voice_category_id');
+            $table->bigInteger('book_category_id');
             $table->string('photo');
             $table->boolean('is_premium');
             $table->bigInteger('points')->nullable();

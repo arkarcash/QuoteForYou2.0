@@ -42,7 +42,7 @@ Route::middleware('auth:sanctum')->group(function ($q){
     Route::get('toggle/save/note/{note_id}',[NoteController::class,'toggleSaveNote']);
     Route::get('saved/notes',[NoteController::class,'savedNotes']);
 
-    Route::get('toggle/save/book/{book_id}',[BookController::class,'toggleSaveBook']);
+    Route::get('save/book/{book_id}',[BookController::class,'toggleSaveBook']);
     Route::get('saved/books',[BookController::class,'savedBooks']);
 
     Route::get('add/point',[AuthController::class,'addPoint']);

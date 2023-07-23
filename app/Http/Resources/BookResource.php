@@ -31,15 +31,16 @@ class BookResource extends JsonResource
         return [
             'id' => $this->id,
             'title' => $this->title,
-            'category_id' => $this->voice_category_id,
-            'category' => $this->voiceCategory->name,
+            'category_id' => $this->book_category_id,
+            'category' => $this->bookCategory->name,
             'photo' => $photo,
             'description' => $this->description,
             "is_premium" =>  $this->is_premium,
             "point" => $this->points,
             "link" => $this->link,
             "eBook" => $eBook ?? null,
-            "save" => $this->users_count
+            "save" => $this->users->count() > 0,
+            "expire_date" =>  $this->users->count() > 0 ? $this->users[0]['pivot']['expire_date'] : null
         ];
     }
 }
