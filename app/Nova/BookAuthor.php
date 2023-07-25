@@ -3,31 +3,25 @@
 namespace App\Nova;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Str;
-use Laravel\Nova\Fields\BelongsTo;
-use Laravel\Nova\Fields\File;
 use Laravel\Nova\Fields\ID;
-use Laravel\Nova\Fields\Image;
-use Laravel\Nova\Fields\Markdown;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
-class Voice extends Resource
+class BookAuthor extends Resource
 {
     /**
      * The model the resource corresponds to.
      *
-     * @var class-string<\App\Models\Voice>
+     * @var class-string<\App\Models\BookAuthor>
      */
-    public static $model = \App\Models\Voice::class;
+    public static $model = \App\Models\BookAuthor::class;
 
     /**
      * The single value that should be used to represent the resource when being displayed.
      *
      * @var string
      */
-    public static $title = 'title';
+    public static $title = 'name';
 
     /**
      * The columns that should be searched.
@@ -35,8 +29,7 @@ class Voice extends Resource
      * @var array
      */
     public static $search = [
-        'id',
-        'title'
+        'id','name'
     ];
 
     /**
@@ -49,24 +42,7 @@ class Voice extends Resource
     {
         return [
             ID::make()->sortable(),
-            Text::make('Title','title')->rules('required'),
-            Markdown::make('Description','description')->rules('required'),
-            BelongsTo::make('Voice Category','voiceCategory')->withoutTrashed(),
-
-
-            Image::make('photo')
-                ->disk('public')
-                ->path('book')
-                ->storeAs(function (Request $request) {
-                    return Str::replace(' ','_',$request->photo->getClientOriginalName());
-                })
-                ->preview(function ($value, $disk) {
-                    return $value
-                        ? Storage::disk($disk)->url($value)
-                        : null;
-                })
-                ->prunable()
-                ->creationRules('required','image')->updateRules('nullable','image'),
+            Text::make('Name','name')
         ];
     }
 

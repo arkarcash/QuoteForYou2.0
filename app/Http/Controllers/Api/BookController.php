@@ -20,6 +20,12 @@ class BookController extends Controller
             ->when(isset($request->category_id),function ($q) use ($request){
                 return $q->where('book_category_id',$request->category_id);
             })
+            ->when(isset($request->author_id),function ($q) use ($request){
+                return $q->where('book_author_id',$request->author_id);
+            })
+            ->when(isset($request->keyword),function ($q) use ($request){
+                return $q->where('title','LIKE',"%$request->keyword%");
+            })
            ->with(['users' => function($u){
                return $u->where('user_id',Auth::guard('sanctum')->id())->wherePivot('expire_date','>=',today());
            }])

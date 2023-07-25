@@ -14,6 +14,11 @@ class Book extends Model
         return $this->belongsTo(BookCategory::class)->withTrashed();
     }
 
+    public function BookAuthor()
+    {
+        return $this->belongsTo(BookAuthor::class)->withTrashed();
+    }
+
     public function users()
     {
         return $this->belongsToMany(User::class)->withPivot('expire_date');
