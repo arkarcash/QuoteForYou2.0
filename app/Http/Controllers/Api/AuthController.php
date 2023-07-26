@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Helper\ResponseHelper;
+use App\Http\Resources\UserDetailResource;
 use App\Http\Resources\UserResource;
 use App\Models\Certificate;
 use App\Models\Fcmtokenkey;
@@ -20,6 +21,12 @@ use Intervention\Image\Facades\Image;
 class AuthController extends Controller
 {
     use ResponseHelper;
+
+    public function detail()
+    {
+        $user = User::with('certificate')->where('id',Auth::guard('sanctum')->id())->first();
+        return UserDetailResource::make($user);
+    }
     public function register(Request $request)
     {
         $validate = Validator::make($request->all(), [
@@ -59,6 +66,11 @@ class AuthController extends Controller
         $this->insertToken($request->fcm_token_key,$user->id);
 
         Auth::login($user);
+
+        $certificate = new Certificate();
+        $certificate->user_id = Auth::id();
+        $certificate->save();
+
 
         return response()->json(['status' => true , 'data' => UserResource::make(Auth::user()->refresh()) ,'token' => $token]);
     }

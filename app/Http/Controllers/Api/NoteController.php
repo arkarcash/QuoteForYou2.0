@@ -26,11 +26,14 @@ class NoteController extends Controller
             return $q->whereHas('tags',function ($t) use ($request){
                 return $t->where('tag_id',$request->tag_id);
             });
-        })->when(Auth::guard('sanctum')->check(),function ($q) use ($request){
-            return $q->withCount(['users' => function($u){
-                return $u->where('user_id',Auth::guard('sanctum')->id());
-            }]);
-        })->where('is_poem',1)->with('author','tags')->paginate(10);
+            })->when(Auth::guard('sanctum')->check(),function ($q) use ($request){
+                return $q->withCount(['users' => function($u){
+                    return $u->where('user_id',Auth::guard('sanctum')->id());
+                }]);
+            })->where('is_poem',1)->with('author','tags')
+            ->when(isset($request->trending),function ($q) use ($request){
+                return $q->orderBy('view','desc');
+            })->orderBy('id','desc')->paginate(10);
 
            $meta = [
                 'total' => $poems->total(),
@@ -53,7 +56,10 @@ class NoteController extends Controller
                    return $q->withCount(['users' => function($u){
                       return $u->where('user_id',Auth::guard('sanctum')->id());
                    }]);
-                })->where('is_poem',0)->paginate(10);
+                })->where('is_poem',0)
+                ->when(isset($request->trending),function ($q) use ($request){
+                    return $q->orderBy('view','desc');
+                })->orderBy('id','desc')->paginate(10);
 
         $meta = [
             'total' => $quote->total(),
@@ -69,7 +75,10 @@ class NoteController extends Controller
         $voices = Voice::with('voiceCategory')
                         ->when(isset($request->category_id),function ($q) use ($request){
                             return $q->where('voice_category_id',$request->category_id);
-                        })->paginate(10);
+                        })
+                        ->when(isset($request->trending),function ($q) use ($request){
+                            return $q->orderBy('view','desc');
+                        })->orderBy('id','desc')->paginate(10);
 
         $meta = [
             'total' => $voices->total(),
@@ -133,6 +142,22 @@ class NoteController extends Controller
             'has_more_page' => $quote->hasMorePages()
         ];
         return $this->success(NoteResource::collection($quote),$meta);
+    }
+
+    public function increaseNote($noteId)
+    {
+        $note = Note::where('id',$noteId)->first();
+        $note->increment('view',1);
+
+        return $this->success($note);
+    }
+
+    public function increaseVoice($noteId)
+    {
+        $note = Voice::where('id',$noteId)->first();
+        $note->increment('view',1);
+
+        return $this->success($note);
     }
 
     public function ads()

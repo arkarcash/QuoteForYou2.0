@@ -22,10 +22,12 @@ class VoiceResource extends JsonResource
             $photo = asset('storage/'.$this->photo);
         }
         return [
+            'id' => $this->id,
             'title' => $this->title,
             'category_id' => $this->voice_category_id,
             'category' => $this->voiceCategory->name,
             'photo' => $photo,
+            'view' => $this->view,
             'description' => $this->description
         ];
     }

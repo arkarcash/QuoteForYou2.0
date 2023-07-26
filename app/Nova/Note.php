@@ -10,6 +10,7 @@ use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Markdown;
 use Laravel\Nova\Fields\MorphToMany;
+use Laravel\Nova\Fields\Number;
 use Laravel\Nova\Fields\Sparkline;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
@@ -54,6 +55,7 @@ class Note extends Resource
             Boolean::make(' Poem ?','is_poem')->rules('required'),
 //            BelongsToMany::make('Tags','tags')->showCreateRelationButton(),
             \Laravel\Nova\Fields\Tag::make('Tags'),
+            Number::make('Total Views','view')
 
         ];
     }

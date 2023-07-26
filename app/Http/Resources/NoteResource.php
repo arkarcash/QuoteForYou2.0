@@ -21,6 +21,7 @@ class NoteResource extends JsonResource
             'description' => $this->description,
             'is_poem' => $this->is_poem,
             'tags' => TagResource::collection($this->tags),
+            'view' => $this->view,
             'saved' => $this->users_count ?? 0
         ];
     }

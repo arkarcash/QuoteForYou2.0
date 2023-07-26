@@ -10,6 +10,7 @@ use Laravel\Nova\Fields\File;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Image;
 use Laravel\Nova\Fields\Markdown;
+use Laravel\Nova\Fields\Number;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
@@ -53,7 +54,7 @@ class Voice extends Resource
             Markdown::make('Description','description')->rules('required'),
             BelongsTo::make('Voice Category','voiceCategory')->withoutTrashed(),
 
-
+            Number::make('Total Views','view'),
             Image::make('photo')
                 ->disk('public')
                 ->path('book')

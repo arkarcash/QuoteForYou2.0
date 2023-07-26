@@ -16,7 +16,7 @@ class BookController extends Controller
     use ResponseHelper;
     public function books(Request $request)
     {
-        $books = Book::with('bookCategory')
+        $books = Book::with('bookCategory')->withCount('users')
             ->when(isset($request->category_id),function ($q) use ($request){
                 return $q->where('book_category_id',$request->category_id);
             })
@@ -29,9 +29,12 @@ class BookController extends Controller
            ->with(['users' => function($u){
                return $u->where('user_id',Auth::guard('sanctum')->id())->wherePivot('expire_date','>=',today());
            }])
+            ->when(isset($request->trending),function ($q) use ($request){
+                return $q->orderBy('users_count','desc');
+            })
             ->when(isset($request->is_premium),function ($q) use ($request){
                 return $q->where('is_premium',$request->is_premium);
-            })->paginate(10);
+            })->orderBy('id','desc')->paginate(10);
 
         $meta = [
             'total' => $books->total(),
