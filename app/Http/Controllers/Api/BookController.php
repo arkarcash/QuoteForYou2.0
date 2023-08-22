@@ -8,7 +8,10 @@ use App\Http\Resources\BlogResource;
 use App\Http\Resources\BookResource;
 use App\Models\Blog;
 use App\Models\Book;
+use App\Models\Category;
 use App\Models\Month;
+use App\Models\MonthAnalysis;
+use App\Models\Tag;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -122,8 +125,23 @@ class BookController extends Controller
 
     public function analysis()
     {
-        $analysis = Month::where('is_show',1)->with('MonthAnalyses')->get();
+        $analysis = Month::select('name')->where('is_show',1)->get();
 
-        return $analysis;
+        $traffic = MonthAnalysis::select('id','month_id','traffic','name')->whereHas('month',function ($q){
+            return $q->where('is_show',1);
+        })->get();
+
+        return response()->json([
+           'traffic' =>  $traffic,
+            'months' => $analysis
+        ]);
+    }
+
+    public function tags()
+    {
+        $tags = Tag::select('id','name')->get();
+
+        return $this->success($tags);
+
     }
 }

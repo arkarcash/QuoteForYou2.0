@@ -63,6 +63,7 @@ Route::get('voices',[NoteController::class,'voices']);
 Route::get('ads',[NoteController::class,'ads']);
 
 Route::get('analysis',[BookController::class,'analysis']);
+Route::get('tags',[BookController::class,'tags']);
 
 
 Route::get('note/views/{note_id}',[NoteController::class,'increaseNote']);
