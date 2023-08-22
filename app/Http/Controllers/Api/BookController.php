@@ -4,8 +4,11 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Helper\ResponseHelper;
+use App\Http\Resources\BlogResource;
 use App\Http\Resources\BookResource;
+use App\Models\Blog;
 use App\Models\Book;
+use App\Models\Month;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -103,5 +106,24 @@ class BookController extends Controller
             'has_more_page' => $quote->hasMorePages()
         ];
         return $this->success(BookResource::collection($quote),$meta);
+    }
+
+    public function blogs()
+    {
+        $blogs = Blog::latest()->paginate(10);
+        $meta = [
+            'total' => $blogs->total(),
+            'current_page' => $blogs->currentPage(),
+            'last_page' => $blogs->lastPage(),
+            'has_more_page' => $blogs->hasMorePages()
+        ];
+        return $this->success(BlogResource::collection($blogs),$meta);
+    }
+
+    public function analysis()
+    {
+        $analysis = Month::where('is_show',1)->with('MonthAnalyses')->get();
+
+        return $analysis;
     }
 }

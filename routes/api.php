@@ -51,6 +51,7 @@ Route::middleware('auth:sanctum')->group(function ($q){
 });
 
 Route::get('/books',[BookController::class,'books']);
+Route::get('/blogs',[BookController::class,'blogs']);
 
 Route::get('voice/categories',[NoteController::class,'voiceCategories']);
 
@@ -60,6 +61,8 @@ Route::get('quote',[NoteController::class,'quote']);
 
 Route::get('voices',[NoteController::class,'voices']);
 Route::get('ads',[NoteController::class,'ads']);
+
+Route::get('analysis',[BookController::class,'analysis']);
 
 
 Route::get('note/views/{note_id}',[NoteController::class,'increaseNote']);

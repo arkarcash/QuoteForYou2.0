@@ -23,17 +23,27 @@ class NoteController extends Controller
     public function poems(Request $request)
     {
         $poems = Note::when(isset($request->tag_id),function ($q) use ($request){
-            return $q->whereHas('tags',function ($t) use ($request){
-                return $t->where('tag_id',$request->tag_id);
-            });
-            })->when(Auth::guard('sanctum')->check(),function ($q) use ($request){
-                return $q->withCount(['users' => function($u){
-                    return $u->where('user_id',Auth::guard('sanctum')->id());
-                }]);
-            })->where('is_poem',1)->with('author','tags')
-            ->when(isset($request->trending),function ($q) use ($request){
-                return $q->orderBy('view','desc');
-            })->orderBy('id','desc')->paginate(10);
+                    return $q->whereHas('tags',function ($t) use ($request){
+                        return $t->where('tag_id',$request->tag_id);
+                    });
+                })->when(isset($request->author_id),function ($q) use ($request){
+                    return $q->whereHas('author',function ($t) use ($request){
+                        return $t->where('id',$request->author_id);
+                    });
+                })->when(isset($request->keyword),function ($q) use ($request){
+                    return $q->whereHas('author',function ($t) use ($request){
+                        return $t->where('name','LIKE',"%$request->keyword%");
+                    })->owWhereHas('tags',function ($t) use ($request){
+                        return $t->where('name','LIKE',"%$request->keyword%");
+                    });
+                })->when(Auth::guard('sanctum')->check(),function ($q) use ($request){
+                    return $q->withCount(['users' => function($u){
+                        return $u->where('user_id',Auth::guard('sanctum')->id());
+                    }]);
+                })->where('is_poem',1)->with('author','tags')
+                    ->when(isset($request->trending),function ($q) use ($request){
+                        return $q->orderBy('view','desc');
+                })->orderBy('id','desc')->paginate(10);
 
            $meta = [
                 'total' => $poems->total(),

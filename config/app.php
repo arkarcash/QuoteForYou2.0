@@ -4,6 +4,11 @@ use Illuminate\Support\Facades\Facade;
 
 return [
 
+
+    'firebase' => [
+        'server_key'  => env('FCM_SERVER_KEY')
+    ],
+
     /*
     |--------------------------------------------------------------------------
     | Application Name
