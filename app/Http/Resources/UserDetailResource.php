@@ -27,6 +27,20 @@ class UserDetailResource extends JsonResource
             '10.-QFY-(Legend)-(FOR-APP).png'
         ];
 
+        $bgFrames = [
+            '0_newbie.png',
+            '1_contributor.png',
+            '2_rising_star.png',
+            '3_mentor.png',
+            '4_guru.png',
+            '5_mystery.png',
+            '6_Creator.png',
+            '7_Specialist.png',
+            '8_Collaborator.png',
+            '9_Authority.png',
+            '10_Legend.png'
+        ];
+
         return [
             "id" => $this->id,
             "name" => $this->name,
@@ -36,6 +50,7 @@ class UserDetailResource extends JsonResource
             'ranks' => [
                 [
                     'rank_name' => 'Newbie',
+                    'rank_photo' =>  asset('Ranks/'.$bgFrames[0]),
                     'need_point' => 0,
                     'is_arrived' => true,
                     'require_point' => 0,
@@ -44,6 +59,7 @@ class UserDetailResource extends JsonResource
                 ],
                 [
                     'rank_name' => 'Contributor',
+                    'rank_photo' =>  asset('Ranks/'.$bgFrames[1]),
                     'need_point' => 500,
                     'is_arrived' => $this->points >= 500,
                     'require_point' => $this->points >= 500 ? 0 : 500 - $this->points,
@@ -52,6 +68,7 @@ class UserDetailResource extends JsonResource
                 ],
                 [
                     'rank_name' => 'Rising Star',
+                    'rank_photo' =>  asset('Ranks/'.$bgFrames[2]),
                     'need_point' => 1500,
                     'is_arrived' => $this->points >= 1500,
                     'require_point' => $this->points >= 1500 ? 0 : 1500 - $this->points,
@@ -60,6 +77,8 @@ class UserDetailResource extends JsonResource
                 ],
                 [
                     'rank_name' => 'Guru',
+                    'rank_photo' =>  asset('Ranks/'.$bgFrames[3]),
+
                     'need_point' => 3000,
                     'is_arrived' => $this->points >= 3000,
                     'require_point' => $this->points >= 3000 ? 0 : 3000 - $this->points,
@@ -68,6 +87,8 @@ class UserDetailResource extends JsonResource
                 ],
                 [
                     'rank_name' => 'Mentor',
+                    'rank_photo' =>  asset('Ranks/'.$bgFrames[4]),
+
                     'need_point' => 6000,
                     'is_arrived' => $this->points >= 6000,
                     'require_point' => $this->points >= 6000 ? 0 : 6000 - $this->points,
@@ -76,6 +97,8 @@ class UserDetailResource extends JsonResource
                 ],
                 [
                     'rank_name' => 'Mystery',
+                    'rank_photo' =>  asset('Ranks/'.$bgFrames[5]),
+
                     'need_point' => 10000,
                     'is_arrived' => $this->points >= 10000,
                     'require_point' => $this->points >= 10000 ? 0 : 10000 - $this->points,
@@ -84,6 +107,8 @@ class UserDetailResource extends JsonResource
                 ],
                 [
                     'rank_name' => 'Creator',
+                    'rank_photo' =>  asset('Ranks/'.$bgFrames[6]),
+
                     'need_point' => 20000,
                     'is_arrived' => $this->points >= 20000,
                     'require_point' => $this->points >= 20000 ? 0 : 20000 - $this->points,
@@ -92,6 +117,8 @@ class UserDetailResource extends JsonResource
                 ],
                 [
                     'rank_name' => 'Specialist',
+                    'rank_photo' =>  asset('Ranks/'.$bgFrames[7]),
+
                     'need_point' => 40000,
                     'is_arrived' => $this->points >= 40000,
                     'require_point' => $this->points >= 40000 ? 0 : 40000 - $this->points,
@@ -101,6 +128,8 @@ class UserDetailResource extends JsonResource
                 ],
                 [
                     'rank_name' => 'Collaborator',
+                    'rank_photo' =>  asset('Ranks/'.$bgFrames[8]),
+
                     'need_point' => 80000,
                     'is_arrived' => $this->points >= 80000,
                     'require_point' => $this->points >= 80000 ? 0 : 80000 - $this->points,
@@ -109,6 +138,8 @@ class UserDetailResource extends JsonResource
                 ],
                 [
                     'rank_name' => 'Authority',
+                    'rank_photo' =>  asset('Ranks/'.$bgFrames[9]),
+
                     'need_point' => 120000,
                     'is_arrived' => $this->points >= 120000,
                     'require_point' => $this->points >= 120000 ? 0 : 120000 - $this->points,
@@ -117,6 +148,8 @@ class UserDetailResource extends JsonResource
                 ],
                 [
                     'rank_name' => 'Legend',
+                    'rank_photo' =>  asset('Ranks/'.$bgFrames[10]),
+
                     'need_point' => 200000,
                     'is_arrived' => $this->points >= 200000,
                     'require_point' => $this->points >= 200000 ? 0 : 200000 - $this->points,

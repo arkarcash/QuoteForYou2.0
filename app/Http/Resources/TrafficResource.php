@@ -14,8 +14,6 @@ class TrafficResource extends JsonResource
      */
     public function toArray($request)
     {
-        return [
-           $this->traffic / 2000
-        ];
+        return (string)$this ;
     }
 }
