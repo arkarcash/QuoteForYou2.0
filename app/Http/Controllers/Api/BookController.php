@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Helper\ResponseHelper;
 use App\Http\Resources\BlogResource;
 use App\Http\Resources\BookResource;
+use App\Http\Resources\TrafficResource;
 use App\Models\Blog;
 use App\Models\Book;
 use App\Models\Category;
@@ -125,14 +126,14 @@ class BookController extends Controller
 
     public function analysis()
     {
-        $analysis = Month::select('name')->where('is_show',1)->get();
+        $analysis = Month::select('name')->where('is_show',1)->first();
 
         $traffic = MonthAnalysis::select('id','month_id','traffic','name')->whereHas('month',function ($q){
             return $q->where('is_show',1);
         })->get();
 
         return response()->json([
-           'traffic' =>  $traffic,
+            'points' => TrafficResource::collection($traffic),
             'months' => $analysis
         ]);
     }

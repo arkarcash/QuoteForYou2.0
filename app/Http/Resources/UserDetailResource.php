@@ -14,6 +14,19 @@ class UserDetailResource extends JsonResource
      */
     public function toArray($request)
     {
+        $bgFrames = [
+            '1.-QFY-CONTRIBUTOR-(FOR-APP).png',
+            '2.-QFY-RISING-STAR-(FOR-APP).png',
+            '3.-QFY-GURU-(FOR-APP).png',
+            '4.-QFY-MENTOR-(FOR-APP).png',
+            '5.-QFY-MYSTERY-(FOR-APP).png',
+            '6.-QFY-(Creator)-(FOR-APP).png',
+            '7.-QFY-(Specialist)-(FOR-APP).png',
+            '8.-QFY-(Collaborator)-(FOR-APP).png',
+            '9.-QFY-(Authority)-(FOR-APP).png',
+            '10.-QFY-(Legend)-(FOR-APP).png'
+        ];
+
         return [
             "id" => $this->id,
             "name" => $this->name,
@@ -34,7 +47,7 @@ class UserDetailResource extends JsonResource
                     'need_point' => 500,
                     'is_arrived' => $this->points >= 500,
                     'require_point' => $this->points >= 500 ? 0 : 500 - $this->points,
-                    'certificate' => $this->certificate->contributor != null ? asset('storage/certificates/'.$this->certificate->contributor) : null,
+                    'certificate' => $this->certificate->contributor != null ? asset('storage/certificates/'.$this->certificate->contributor) : asset('CertificateFrame/'.$bgFrames[0]),
                     'percentage' => $this->points == 0 ? 0 :  ($this->points / 500 ) * 100
                 ],
                 [
@@ -42,7 +55,7 @@ class UserDetailResource extends JsonResource
                     'need_point' => 1500,
                     'is_arrived' => $this->points >= 1500,
                     'require_point' => $this->points >= 1500 ? 0 : 1500 - $this->points,
-                    'certificate' => $this->certificate->rising_star != null ? asset('storage/certificates/'.$this->certificate->rising_star) : null,
+                    'certificate' => $this->certificate->rising_star != null ? asset('storage/certificates/'.$this->certificate->rising_star) : asset('CertificateFrame/'.$bgFrames[1]),
                     'percentage' => $this->points == 0 ? 0 :  ($this->points / 1500 ) * 100
                 ],
                 [
@@ -50,7 +63,7 @@ class UserDetailResource extends JsonResource
                     'need_point' => 3000,
                     'is_arrived' => $this->points >= 3000,
                     'require_point' => $this->points >= 3000 ? 0 : 3000 - $this->points,
-                    'certificate' => $this->certificate->guru != null ? asset('storage/certificates/'.$this->certificate->guru) : null,
+                    'certificate' => $this->certificate->guru != null ? asset('storage/certificates/'.$this->certificate->guru) : asset('CertificateFrame/'.$bgFrames[2]),
                     'percentage' => $this->points == 0 ? 0 :  ($this->points / 3000 ) * 100
                 ],
                 [
@@ -58,7 +71,7 @@ class UserDetailResource extends JsonResource
                     'need_point' => 6000,
                     'is_arrived' => $this->points >= 6000,
                     'require_point' => $this->points >= 6000 ? 0 : 6000 - $this->points,
-                    'certificate' => $this->certificate->mentor != null ? asset('storage/certificates/'.$this->certificate->mentor) : null,
+                    'certificate' => $this->certificate->mentor != null ? asset('storage/certificates/'.$this->certificate->mentor) : asset('CertificateFrame/'.$bgFrames[3]),
                     'percentage' => $this->points == 0 ? 0 :  ($this->points / 6000 ) * 100
                 ],
                 [
@@ -66,7 +79,7 @@ class UserDetailResource extends JsonResource
                     'need_point' => 10000,
                     'is_arrived' => $this->points >= 10000,
                     'require_point' => $this->points >= 10000 ? 0 : 10000 - $this->points,
-                    'certificate' => $this->certificate->mystery != null ? asset('storage/certificates/'.$this->certificate->mystery) : null,
+                    'certificate' => $this->certificate->mystery != null ? asset('storage/certificates/'.$this->certificate->mystery) : asset('CertificateFrame/'.$bgFrames[4]),
                     'percentage' => $this->points == 0 ? 0 :  ($this->points / 10000 ) * 100
                 ],
                 [
@@ -74,7 +87,7 @@ class UserDetailResource extends JsonResource
                     'need_point' => 20000,
                     'is_arrived' => $this->points >= 20000,
                     'require_point' => $this->points >= 20000 ? 0 : 20000 - $this->points,
-                    'certificate' => $this->certificate->creator != null ? asset('storage/certificates/'.$this->certificate->creator) : null,
+                    'certificate' => $this->certificate->creator != null ? asset('storage/certificates/'.$this->certificate->creator) : asset('CertificateFrame/'.$bgFrames[5]),
                     'percentage' => $this->points == 0 ? 0 :  ($this->points / 20000 ) * 100
                 ],
                 [
@@ -82,7 +95,7 @@ class UserDetailResource extends JsonResource
                     'need_point' => 40000,
                     'is_arrived' => $this->points >= 40000,
                     'require_point' => $this->points >= 40000 ? 0 : 40000 - $this->points,
-                    'certificate' => $this->certificate->specialist != null ? asset('storage/certificates/'.$this->certificate->specialist) : null,
+                    'certificate' => $this->certificate->specialist != null ? asset('storage/certificates/'.$this->certificate->specialist) : asset('CertificateFrame/'.$bgFrames[6]),
                     'percentage' => $this->points == 0 ? 0 :  ($this->points / 40000 ) * 100
 
                 ],
@@ -91,7 +104,7 @@ class UserDetailResource extends JsonResource
                     'need_point' => 80000,
                     'is_arrived' => $this->points >= 80000,
                     'require_point' => $this->points >= 80000 ? 0 : 80000 - $this->points,
-                    'certificate' => $this->certificate->collaborator != null ? asset('storage/certificates/'.$this->certificate->collaborator) : null,
+                    'certificate' => $this->certificate->collaborator != null ? asset('storage/certificates/'.$this->certificate->collaborator) : asset('CertificateFrame/'.$bgFrames[7]),
                     'percentage' => $this->points == 0 ? 0 :  ($this->points / 80000 ) * 100
                 ],
                 [
@@ -99,7 +112,7 @@ class UserDetailResource extends JsonResource
                     'need_point' => 120000,
                     'is_arrived' => $this->points >= 120000,
                     'require_point' => $this->points >= 120000 ? 0 : 120000 - $this->points,
-                    'certificate' => $this->certificate->authority != null ? asset('storage/certificates/'.$this->certificate->authority) : null,
+                    'certificate' => $this->certificate->authority != null ? asset('storage/certificates/'.$this->certificate->authority) : asset('CertificateFrame/'.$bgFrames[8]),
                     'percentage' => $this->points == 0 ? 0 :  ($this->points / 120000 ) * 100
                 ],
                 [
@@ -107,7 +120,7 @@ class UserDetailResource extends JsonResource
                     'need_point' => 200000,
                     'is_arrived' => $this->points >= 200000,
                     'require_point' => $this->points >= 200000 ? 0 : 200000 - $this->points,
-                    'certificate' => $this->certificate->legend != null ? asset('storage/certificates/'.$this->certificate->legend) : null,
+                    'certificate' => $this->certificate->legend != null ? asset('storage/certificates/'.$this->certificate->legend) : asset('CertificateFrame/'.$bgFrames[9]),
                     'percentage' => $this->points == 0 ? 0 :  ($this->points / 200000 ) * 100
 
                 ],
