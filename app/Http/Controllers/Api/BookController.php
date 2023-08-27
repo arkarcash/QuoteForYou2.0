@@ -133,7 +133,7 @@ class BookController extends Controller
         })->get();
 
         return response()->json([
-            'points' => TrafficResource::collection($traffic),
+            'points' => TrafficResource::collection($traffic->pluck('traffic')),
             'months' => $analysis
         ]);
     }
