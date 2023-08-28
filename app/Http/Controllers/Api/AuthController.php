@@ -10,6 +10,7 @@ use App\Models\Certificate;
 use App\Models\Fcmtokenkey;
 use App\Models\Order;
 use App\Models\User;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -25,6 +26,13 @@ class AuthController extends Controller
     public function detail()
     {
         $user = User::with('certificate')->where('id',Auth::guard('sanctum')->id())->first();
+
+        if ($user->certificate == null){
+            $certificate = new Certificate();
+            $certificate->user_id = Auth::id();
+            $certificate->save();
+        }
+
         return UserDetailResource::make($user);
     }
     public function register(Request $request)
