@@ -45,7 +45,7 @@ Route::middleware('auth:sanctum')->group(function ($q){
     Route::get('save/book/{book_id}',[BookController::class,'toggleSaveBook']);
     Route::get('saved/books',[BookController::class,'savedBooks']);
 
-    Route::get('add/point',[AuthController::class,'addPoint']);
+    Route::get('add/point/{points}',[AuthController::class,'addPoint']);
     Route::get('detail',[AuthController::class,'detail']);
 
 });
