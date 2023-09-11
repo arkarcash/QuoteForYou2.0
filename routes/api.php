@@ -6,6 +6,7 @@ use App\Http\Controllers\Api\CartController;
 use App\Http\Controllers\Api\NoteController;
 use App\Http\Controllers\Api\OrderController;
 use App\Http\Controllers\Api\ProductController;
+use App\Http\Controllers\ReportController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -29,7 +30,6 @@ Route::post('login',[AuthController::class,'login']);
 
 Route::middleware('auth:sanctum')->group(function ($q){
 
-
     Route::post('logout',[AuthController::class,'logout']);
 //    Route::resource('cart', CartController::class)->only('index','store');
 //    Route::post('single/cart',[CartController::class,'singleStore']);
@@ -47,6 +47,7 @@ Route::middleware('auth:sanctum')->group(function ($q){
 
     Route::get('add/point/{points}',[AuthController::class,'addPoint']);
     Route::get('detail',[AuthController::class,'detail']);
+    Route::post('report',[ReportController::class,'report']);
 
 });
 
@@ -69,5 +70,5 @@ Route::get('tags',[BookController::class,'tags']);
 Route::get('note/views/{note_id}',[NoteController::class,'increaseNote']);
 Route::get('voice/views/{voice_id}',[NoteController::class,'increaseVoice']);
 
-//Route::get('products',[ProductController::class,'index']);
+Route::get('banners',[ReportController::class,'banners']);
 //Route::get('product/{product_id}',[ProductController::class,'show']);

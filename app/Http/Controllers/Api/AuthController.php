@@ -338,5 +338,3 @@ class AuthController extends Controller
         return true;
     }
 }
-
-

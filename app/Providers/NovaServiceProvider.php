@@ -18,6 +18,7 @@ use App\Nova\Order;
 use App\Nova\Payment;
 use App\Nova\Product;
 use App\Nova\ProductPhoto;
+use App\Nova\Report;
 use App\Nova\Tag;
 use App\Nova\User;
 use App\Nova\Voice;
@@ -58,6 +59,9 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
                 MenuSection::resource(User::class)->icon('user-group'),
                 MenuSection::resource(Ads::class)->icon('currency-dollar'),
                 MenuSection::resource(Blog::class)->icon('chat-alt'),
+                MenuSection::resource(Report::class)->icon('receipt-refund'),
+                MenuSection::resource(Banner::class)->icon('view-boards'),
+
                 MenuSection::make('Book', [
                     MenuItem::resource(BookAuthor::class),
                     MenuItem::resource(BookCategory::class),
@@ -75,7 +79,6 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
                     MenuItem::resource(Note::class),
                 ])->icon('pencil')->collapsable(),
 
-                MenuSection::resource(Banner::class)->icon('view-boards'),
 
             ];
         });
