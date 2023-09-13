@@ -33,7 +33,7 @@ class NoteController extends Controller
                 })->when(isset($request->keyword),function ($q) use ($request){
                     return $q->whereHas('author',function ($t) use ($request){
                         return $t->where('name','LIKE',"%$request->keyword%");
-                    })->owWhereHas('tags',function ($t) use ($request){
+                    })->orWhereHas('tags',function ($t) use ($request){
                         return $t->where('name','LIKE',"%$request->keyword%");
                     });
                 })->when(Auth::guard('sanctum')->check(),function ($q) use ($request){
@@ -66,7 +66,15 @@ class NoteController extends Controller
                    return $q->withCount(['users' => function($u){
                       return $u->where('user_id',Auth::guard('sanctum')->id());
                    }]);
-                })->where('is_poem',0)
+                })
+                ->where('is_poem',0)
+                ->when(isset($request->keyword),function ($q) use ($request){
+                    return $q->whereHas('author',function ($t) use ($request){
+                        return $t->where('name','LIKE',"%$request->keyword%");
+                    })->orWhereHas('tags',function ($t) use ($request){
+                        return $t->where('name','LIKE',"%$request->keyword%");
+                    });
+                })
                 ->when(isset($request->trending),function ($q) use ($request){
                     return $q->orderBy('view','desc');
                 })->orderBy('id','desc')->paginate(10);

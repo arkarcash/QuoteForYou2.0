@@ -4,16 +4,21 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Helper\ResponseHelper;
+use App\Http\Resources\AuthorResource;
 use App\Http\Resources\BlogResource;
 use App\Http\Resources\BookResource;
+use App\Http\Resources\CategoryBookResource;
 use App\Http\Resources\TrafficResource;
 use App\Models\Blog;
 use App\Models\Book;
+use App\Models\BookAuthor;
+use App\Models\BookCategory;
 use App\Models\Category;
 use App\Models\Month;
 use App\Models\MonthAnalysis;
 use App\Models\Tag;
 use App\Models\User;
+use App\Nova\Author;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -52,6 +57,13 @@ class BookController extends Controller
         return $this->success(BookResource::collection($books),$meta);
     }
 
+    public function CategoryBooks(Request $request)
+    {
+
+        $books = BookCategory::with('books')->orderBy('id','desc')->paginate(10);
+        return $this->success(CategoryBookResource::collection($books),self::getMeta($books));
+
+    }
 
 
     public function toggleSaveBook($book_id)
@@ -103,24 +115,14 @@ class BookController extends Controller
                 return $u->where('user_id',Auth::guard('sanctum')->id())->wherePivot('expire_date','>=',today());
             }])
             ->paginate(10);
-        $meta = [
-            'total' => $quote->total(),
-            'current_page' => $quote->currentPage(),
-            'last_page' => $quote->lastPage(),
-            'has_more_page' => $quote->hasMorePages()
-        ];
-        return $this->success(BookResource::collection($quote),$meta);
+
+        return $this->success(BookResource::collection($quote),self::getMeta($quote));
     }
 
     public function blogs()
     {
         $blogs = Blog::latest()->paginate(10);
-        $meta = [
-            'total' => $blogs->total(),
-            'current_page' => $blogs->currentPage(),
-            'last_page' => $blogs->lastPage(),
-            'has_more_page' => $blogs->hasMorePages()
-        ];
+        $meta = $this->getMeta($blogs);
         return $this->success(BlogResource::collection($blogs),$meta);
     }
 
@@ -140,9 +142,31 @@ class BookController extends Controller
 
     public function tags()
     {
-        $tags = Tag::select('id','name')->get();
+        $tags = Tag::select('id','name')->paginate();
 
-        return $this->success($tags);
+        return $this->success(AuthorResource::collection($tags),self::getMeta($tags));
 
+    }
+
+    public function bookAuthor()
+    {
+        $authors = BookAuthor::select('id','name')->paginate(20);
+
+        return $this->success(AuthorResource::collection($authors),self::getMeta($authors));
+    }
+
+    /**
+     * @param $blogs
+     * @return array
+     */
+    protected function getMeta($data): array
+    {
+        $meta = [
+            'total' => $data->total(),
+            'current_page' => $data->currentPage(),
+            'last_page' => $data->lastPage(),
+            'has_more_page' => $data->hasMorePages()
+        ];
+        return $meta;
     }
 }

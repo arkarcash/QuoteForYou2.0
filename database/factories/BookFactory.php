@@ -2,6 +2,8 @@
 
 namespace Database\Factories;
 
+use App\Models\BookAuthor;
+use App\Models\BookCategory;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -16,8 +18,18 @@ class BookFactory extends Factory
      */
     public function definition()
     {
+
         return [
-            //
+            'title' => $this->faker->name(),
+            'description' => $this->faker->paragraph(),
+            'photo' => 'fasdf',
+            'is_premium' => random_int(0,1),
+            'points' => random_int(20,100),
+            'link' => 'sadfds',
+            'e_book' => 'asdf',
+            'book_category_id' => BookCategory::get()->random()->id,
+            'book_author_id' => BookAuthor::get()->random()->id,
+
         ];
     }
 }
