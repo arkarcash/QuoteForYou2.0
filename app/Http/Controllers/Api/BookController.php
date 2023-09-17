@@ -8,6 +8,8 @@ use App\Http\Resources\AuthorResource;
 use App\Http\Resources\BlogResource;
 use App\Http\Resources\BookResource;
 use App\Http\Resources\CategoryBookResource;
+use App\Http\Resources\NoteResource;
+use App\Http\Resources\NotesResource;
 use App\Http\Resources\TrafficResource;
 use App\Models\Blog;
 use App\Models\Book;
@@ -157,7 +159,7 @@ class BookController extends Controller
     public function noteAuthor()
     {
         $authors = \App\Models\Author::select('id','name')->paginate(20);
-        return $this->success(AuthorResource::collection($authors),self::getMeta($authors));
+        return $this->success(NotesResource::collection($authors),self::getMeta($authors));
     }
     /**
      * @param $blogs

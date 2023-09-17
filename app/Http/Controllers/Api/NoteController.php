@@ -67,6 +67,11 @@ class NoteController extends Controller
                       return $u->where('user_id',Auth::guard('sanctum')->id());
                    }]);
                 })
+                ->when(isset($request->author_id),function ($q) use ($request){
+                    return $q->whereHas('author',function ($t) use ($request){
+                        return $t->where('id',$request->author_id);
+                    });
+                })
                 ->where('is_poem',0)
                 ->when(isset($request->keyword),function ($q) use ($request){
                     return $q->whereHas('author',function ($t) use ($request){
