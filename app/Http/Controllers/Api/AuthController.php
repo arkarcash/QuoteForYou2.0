@@ -312,7 +312,21 @@ class AuthController extends Controller
         }
 
         return $this->fail('Old Password Not Match');
+    }
 
+    public function changeProfile(Request $request)
+    {
+        $request->validate([
+            'name' => 'nullable|string',
+            'email' => 'nullable|email|unique:users,email'
+        ]);
+
+        $user = User::where('id',Auth::guard('sanctum')->id())->first();
+        $user->email = $request->email ?? $user->email;
+        $user->name = $request->name ?? $user->name;
+        $user->update();
+
+        return response()->json(['status' => true, 'data' => UserResource::make($user)]);
     }
 
     public function insertToken($token,$user_id)

@@ -38,6 +38,7 @@ Route::middleware('auth:sanctum')->group(function ($q){
 
     Route::get('delete/user/{user_id}',[AuthController::class,'deleteUser']);
     Route::post('change/password',[AuthController::class,'changePassword']);
+    Route::post('change/profile',[AuthController::class,'changeProfile']);
 
     Route::get('toggle/save/note/{note_id}',[NoteController::class,'toggleSaveNote']);
     Route::get('saved/notes',[NoteController::class,'savedNotes']);
@@ -68,6 +69,7 @@ Route::get('ads',[NoteController::class,'ads']);
 Route::get('analysis',[BookController::class,'analysis']);
 Route::get('tags',[BookController::class,'tags']);
 Route::get('authors',[BookController::class,'bookAuthor']);
+Route::get('notes/authors',[BookController::class,'noteAuthor']);
 
 
 Route::get('note/views/{note_id}',[NoteController::class,'increaseNote']);

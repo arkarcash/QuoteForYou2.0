@@ -143,7 +143,6 @@ class BookController extends Controller
     public function tags()
     {
         $tags = Tag::select('id','name')->paginate();
-
         return $this->success(AuthorResource::collection($tags),self::getMeta($tags));
 
     }
@@ -151,10 +150,15 @@ class BookController extends Controller
     public function bookAuthor()
     {
         $authors = BookAuthor::select('id','name')->paginate(20);
-
         return $this->success(AuthorResource::collection($authors),self::getMeta($authors));
     }
 
+
+    public function noteAuthor()
+    {
+        $authors = \App\Models\Author::select('id','name')->paginate(20);
+        return $this->success(AuthorResource::collection($authors),self::getMeta($authors));
+    }
     /**
      * @param $blogs
      * @return array
