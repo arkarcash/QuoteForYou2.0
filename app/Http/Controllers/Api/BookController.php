@@ -144,21 +144,21 @@ class BookController extends Controller
 
     public function tags()
     {
-        $tags = Tag::select('id','name')->paginate();
+        $tags = Tag::select('id','name')->paginate(16);
         return $this->success(AuthorResource::collection($tags),self::getMeta($tags));
 
     }
 
     public function bookAuthor()
     {
-        $authors = BookAuthor::select('id','name')->paginate(20);
+        $authors = BookAuthor::select('id','name')->paginate(16);
         return $this->success(AuthorResource::collection($authors),self::getMeta($authors));
     }
 
 
     public function noteAuthor()
     {
-        $authors = \App\Models\Author::select('id','name')->paginate(20);
+        $authors = \App\Models\Author::select('id','name')->paginate(16);
         return $this->success(NotesResource::collection($authors),self::getMeta($authors));
     }
     /**
