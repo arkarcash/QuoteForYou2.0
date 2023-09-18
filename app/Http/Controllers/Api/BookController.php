@@ -71,6 +71,13 @@ class BookController extends Controller
 
     }
 
+    public function catBooks()
+    {
+        $books = BookCategory::with('books')
+            ->orderBy('id','desc')->paginate(10);
+
+        return $books;
+    }
 
     public function toggleSaveBook($book_id)
     {

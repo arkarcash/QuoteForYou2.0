@@ -54,6 +54,7 @@ Route::middleware('auth:sanctum')->group(function ($q){
 
 Route::get('/books',[BookController::class,'books']);
 Route::get('/category/books',[BookController::class,'CategoryBooks']);
+Route::get('/new/category/books',[BookController::class,'catBooks']);
 
 Route::get('/blogs',[BookController::class,'blogs']);
 
