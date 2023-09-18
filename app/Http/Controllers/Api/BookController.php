@@ -66,17 +66,8 @@ class BookController extends Controller
         $books = BookCategory::with('books')
             ->orderBy('id','desc')->paginate(10);
 
-        return $books;
         return $this->success(CategoryBookResource::collection($books),self::getMeta($books));
 
-    }
-
-    public function catBooks()
-    {
-        $books = BookCategory::with('books')
-            ->orderBy('id','desc')->paginate(10);
-
-        return $books;
     }
 
     public function toggleSaveBook($book_id)
