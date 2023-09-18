@@ -153,7 +153,7 @@ class BookController extends Controller
 
     public function noteAuthor()
     {
-        $authors = \App\Models\Author::select('id','name')->paginate(16);
+        $authors = \App\Models\Author::select('id','name')->where('is_poem',1)->paginate(16);
         return $this->success(NotesResource::collection($authors),self::getMeta($authors));
     }
     /**
