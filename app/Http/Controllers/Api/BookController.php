@@ -151,7 +151,7 @@ class BookController extends Controller
 
     public function noteAuthor()
     {
-        $authors = Note::where('is_poem',1)->with('author:id,name')->get()->pluck('author');
+        $authors = Note::where('is_poem',1)->with('author:id,name')->get()->pluck('author')->unique();
 
         return $this->success($authors);
     }
