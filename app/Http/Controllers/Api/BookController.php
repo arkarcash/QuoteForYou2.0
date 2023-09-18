@@ -151,9 +151,22 @@ class BookController extends Controller
 
     public function noteAuthor()
     {
-        $authors = Note::where('is_poem',1)->with('author:id,name')->get()->pluck('author')->unique();
+        $ids = [];
+        $arrays = [];
+        $authors = Note::where('is_poem',1)->with('author:id,name')->get()->pluck('author')->toArray();
 
-        return $this->success($authors);
+
+        foreach ($authors as $note){
+            if (!in_array($note['id'],$ids)){
+                $id = $note['id'];
+                array_push($ids,$id);
+                $new = [ 'id' => $note['id'] , 'name' => $note['name']];
+                array_push($arrays,$new);
+            }
+        }
+
+
+        return $this->success($arrays);
     }
     /**
      * @param $blogs
