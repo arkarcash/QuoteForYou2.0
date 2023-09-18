@@ -17,6 +17,6 @@ class BookCategory extends Model
         return $this->hasMany(Book::class)
             ->with(['users' => function($u){
             return $u->where('user_id',Auth::guard('sanctum')->id())->wherePivot('expire_date','>=',today());
-        }])->take(5);
+        }])->take(10);
     }
 }
