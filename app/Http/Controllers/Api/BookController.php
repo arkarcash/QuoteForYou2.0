@@ -8,19 +8,17 @@ use App\Http\Resources\AuthorResource;
 use App\Http\Resources\BlogResource;
 use App\Http\Resources\BookResource;
 use App\Http\Resources\CategoryBookResource;
-use App\Http\Resources\NoteResource;
 use App\Http\Resources\NotesResource;
-use App\Http\Resources\TrafficResource;
+use App\Models\Author;
 use App\Models\Blog;
 use App\Models\Book;
 use App\Models\BookAuthor;
 use App\Models\BookCategory;
-use App\Models\Category;
 use App\Models\Month;
 use App\Models\MonthAnalysis;
+use App\Models\Note;
 use App\Models\Tag;
 use App\Models\User;
-use App\Nova\Author;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -153,8 +151,9 @@ class BookController extends Controller
 
     public function noteAuthor()
     {
-        $authors = \App\Models\Author::select('id','name')->where('is_poem',1)->paginate(16);
-        return $this->success(NotesResource::collection($authors),self::getMeta($authors));
+        $authors = Note::where('is_poem',1)->with('author:id,name')->get()->pluck('author');
+
+        return $this->success($authors);
     }
     /**
      * @param $blogs
