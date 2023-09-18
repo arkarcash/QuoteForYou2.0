@@ -28,6 +28,7 @@ class BookResource extends JsonResource
                 $eBook = asset('storage/'.$this->e_book);
             }
         }
+
         return [
             'id' => $this->id,
             'title' => $this->title,
@@ -44,5 +45,6 @@ class BookResource extends JsonResource
             "save" => $this->users->count() > 0,
             "expire_date" =>  $this->users->count() > 0 ? $this->users[0]['pivot']['expire_date'] : null
         ];
+
     }
 }

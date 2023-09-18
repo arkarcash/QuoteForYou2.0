@@ -30,7 +30,8 @@ class BookController extends Controller
     use ResponseHelper;
     public function books(Request $request)
     {
-        $books = Book::with('bookCategory')->withCount('users')
+        $books = Book::with('bookCategory')
+            ->withCount('users')
             ->when(isset($request->category_id),function ($q) use ($request){
                 return $q->where('book_category_id',$request->category_id);
             })
@@ -48,7 +49,7 @@ class BookController extends Controller
             })
             ->when(isset($request->is_premium),function ($q) use ($request){
                 return $q->where('is_premium',$request->is_premium);
-            })->orderBy('id','desc')->paginate(10);
+            })->orderBy('id','desc')->paginate(12);
 
         $meta = [
             'total' => $books->total(),
@@ -93,10 +94,7 @@ class BookController extends Controller
             }else{
                 $user->books()->attach( $book_id , ['expire_date' => now()->addWeek(),'created_at' => now() , 'updated_at' => now()]);
             }
-
-
             return $this->success('Add One Week!');
-
         }else{
             $user->books()->attach( $book_id , ['expire_date' => now()->addWeek(),'created_at' => now() , 'updated_at' => now()]);
             return $this->success('saved!');
@@ -104,13 +102,9 @@ class BookController extends Controller
 
     }
 
-
     public function savedBooks(Request $request)
     {
-        $quote = Book::when(isset($request->is_poem),function ($q) use ($request){
-                return $q->where('is_poem',$request->is_poem);
-            })
-            ->whereHas('users',function($u){
+        $books = Book::whereHas('users',function($u){
                 return $u->where('user_id',Auth::guard('sanctum')->id());
             })
             ->with(['users' => function($u){
@@ -118,7 +112,7 @@ class BookController extends Controller
             }])
             ->paginate(10);
 
-        return $this->success(BookResource::collection($quote),self::getMeta($quote));
+        return $this->success(BookResource::collection($books),self::getMeta($books));
     }
 
     public function blogs()
