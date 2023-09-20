@@ -62,7 +62,7 @@ class BookController extends Controller
     {
 
         $books = BookCategory::with('books')
-            ->orderBy('id','desc')->paginate(15);
+            ->orderBy('id','desc')->paginate(10);
 
         return $this->success(CategoryBookResource::collection($books),self::getMeta($books));
 
