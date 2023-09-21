@@ -140,6 +140,10 @@ class AuthController extends Controller
         $fontSizeForLevelFiveToTen = 300;
         $leftDateWidthForLevelFiveToTen = 3.95;
         $leftDateWidthForLevelOneToFive = 2.85;
+        $leftDateWidthForLevelOnlyFive = 3.2;
+
+        $levelOneToFiveHight = 1.14;
+        $levelFiveToTenHight = 1.13;
         $bgFrames = [
             '1.-QFY-CONTRIBUTOR-(FOR-APP).png',
             '2.-QFY-RISING-STAR-(FOR-APP).png',
@@ -159,7 +163,7 @@ class AuthController extends Controller
                     $user->photo = '1_contributor.png';
                     $user->update();
                     $certificateBg = Image::make('CertificateFrame/'.$bgFrames[0]);
-                    self::makeCertificate($certificateBg,$certificate,'contributor',$fontForLevelOneToFive,$fontSizeForLevelOneToFive,$leftDateWidthForLevelOneToFive);
+                    self::makeCertificate($certificateBg,$certificate,'contributor',$fontForLevelOneToFive,$fontSizeForLevelOneToFive,$leftDateWidthForLevelOneToFive,$levelOneToFiveHight);
                 }
             break;
             case 1500:
@@ -167,7 +171,7 @@ class AuthController extends Controller
                     $user->photo = '2_rising_star.png';
                     $user->update();
                     $certificateBg = Image::make('CertificateFrame/'.$bgFrames[1]);
-                    self::makeCertificate($certificateBg,$certificate,'rising_star',$fontForLevelOneToFive,$fontSizeForLevelOneToFive,$leftDateWidthForLevelOneToFive);
+                    self::makeCertificate($certificateBg,$certificate,'rising_star',$fontForLevelOneToFive,$fontSizeForLevelOneToFive,$leftDateWidthForLevelOneToFive,$levelOneToFiveHight);
                 }
                 break;
             case 3000:
@@ -175,7 +179,7 @@ class AuthController extends Controller
                     $user->photo = '4_guru.png';
                     $user->update();
                     $certificateBg = Image::make('CertificateFrame/'.$bgFrames[3]);
-                    self::makeCertificate($certificateBg,$certificate,'mentor',$fontForLevelOneToFive,$fontSizeForLevelOneToFive,$leftDateWidthForLevelOneToFive);
+                    self::makeCertificate($certificateBg,$certificate,'guru',$fontForLevelOneToFive,$fontSizeForLevelOneToFive,$leftDateWidthForLevelOneToFive,$levelOneToFiveHight);
                 }
                 break;
             case 6000:
@@ -183,7 +187,7 @@ class AuthController extends Controller
                     $user->photo = '3_mentor.png';
                     $user->update();
                     $certificateBg = Image::make('CertificateFrame/'.$bgFrames[2]);
-                    self::makeCertificate($certificateBg,$certificate,'guru',$fontForLevelOneToFive,$fontSizeForLevelOneToFive,$leftDateWidthForLevelOneToFive);
+                    self::makeCertificate($certificateBg,$certificate,'mentor',$fontForLevelOneToFive,$fontSizeForLevelOneToFive,$leftDateWidthForLevelOneToFive,$levelOneToFiveHight);
                 }
                 break;
             case 10000:
@@ -191,7 +195,7 @@ class AuthController extends Controller
                     $user->photo = '5_mystery.png';
                     $user->update();
                     $certificateBg = Image::make('CertificateFrame/'.$bgFrames[4]);
-                    self::makeCertificate($certificateBg,$certificate,'mystery',$fontForLevelOneToFive,$fontSizeForLevelOneToFive,$leftDateWidthForLevelOneToFive);
+                    self::makeCertificate($certificateBg,$certificate,'mystery',$fontForLevelOneToFive,$fontSizeForLevelOneToFive,$leftDateWidthForLevelOnlyFive,$levelFiveToTenHight);
                 }
                 break;
             case 20000:
@@ -199,7 +203,7 @@ class AuthController extends Controller
                     $user->photo = '6_Creator.png';
                     $user->update();
                     $certificateBg = Image::make('CertificateFrame/'.$bgFrames[5]);
-                    self::makeCertificate($certificateBg,$certificate,'creator',$fontForLevelFiveToTen,$fontSizeForLevelFiveToTen,$leftDateWidthForLevelFiveToTen);
+                    self::makeCertificate($certificateBg,$certificate,'creator',$fontForLevelFiveToTen,$fontSizeForLevelFiveToTen,$leftDateWidthForLevelFiveToTen,$levelFiveToTenHight);
                 }
                 break;
             case 40000:
@@ -207,7 +211,7 @@ class AuthController extends Controller
                     $user->photo = '7_Specialist.png';
                     $user->update();
                     $certificateBg = Image::make('CertificateFrame/'.$bgFrames[6]);
-                    self::makeCertificate($certificateBg,$certificate,'specialist',$fontForLevelFiveToTen,$fontSizeForLevelFiveToTen,$leftDateWidthForLevelFiveToTen);
+                    self::makeCertificate($certificateBg,$certificate,'specialist',$fontForLevelFiveToTen,$fontSizeForLevelFiveToTen,$leftDateWidthForLevelFiveToTen,$levelFiveToTenHight);
                 }
                 break;
             case 80000:
@@ -215,7 +219,7 @@ class AuthController extends Controller
                     $user->photo = '8_Collaborator.png';
                     $user->update();
                     $certificateBg = Image::make('CertificateFrame/'.$bgFrames[7]);
-                    self::makeCertificate($certificateBg,$certificate,'collaborator',$fontForLevelFiveToTen,$fontSizeForLevelFiveToTen,$leftDateWidthForLevelFiveToTen);
+                    self::makeCertificate($certificateBg,$certificate,'collaborator',$fontForLevelFiveToTen,$fontSizeForLevelFiveToTen,$leftDateWidthForLevelFiveToTen,$levelFiveToTenHight);
                 }
                 break;
             case 130000:
@@ -223,7 +227,7 @@ class AuthController extends Controller
                     $user->photo = '9_Authority.png';
                     $user->update();
                     $certificateBg = Image::make('CertificateFrame/'.$bgFrames[8]);
-                    self::makeCertificate($certificateBg,$certificate,'authority',$fontForLevelFiveToTen,$fontSizeForLevelFiveToTen,$leftDateWidthForLevelFiveToTen);
+                    self::makeCertificate($certificateBg,$certificate,'authority',$fontForLevelFiveToTen,$fontSizeForLevelFiveToTen,$leftDateWidthForLevelFiveToTen,$levelFiveToTenHight);
                 }
                 break;
             case 200000:
@@ -231,7 +235,7 @@ class AuthController extends Controller
                     $user->photo = '10_Legend.png';
                     $user->update();
                     $certificateBg = Image::make('CertificateFrame/'.$bgFrames[9]);
-                    self::makeCertificate($certificateBg,$certificate,'legend',$fontForLevelFiveToTen,$fontSizeForLevelFiveToTen,$leftDateWidthForLevelFiveToTen);
+                    self::makeCertificate($certificateBg,$certificate,'legend',$fontForLevelFiveToTen,$fontSizeForLevelFiveToTen,$leftDateWidthForLevelFiveToTen,$levelFiveToTenHight);
                 }
                 break;
         }
@@ -239,7 +243,7 @@ class AuthController extends Controller
         return $this->success(UserResource::make(Auth::user()->refresh()));
     }
 
-    public static function makeCertificate($imagePath,$certificate,$levelName,$customFont,$fontSize,$leftWidth)
+    public static function makeCertificate($imagePath,$certificate,$levelName,$customFont,$fontSize,$leftWidth,$height)
     {
         if(!Storage::exists("public/certificates")){
             Storage::makeDirectory("public/certificates");
@@ -255,9 +259,9 @@ class AuthController extends Controller
             $font->align('center');
             $font->color('#DB4E54');
         })
-            ->text($date, $imagePath->width()  / $leftWidth, $imagePath->height() / 1.13,function ($font) use ($customFont){
+            ->text($date, $imagePath->width()  / $leftWidth, $imagePath->height() / $height,function ($font) use ($customFont){
             $font->file(public_path('Fonts/BRUSHSCI.ttf'));
-            $font->size(80);
+            $font->size(75);
             $font->color('#306FB6');
         });
 
