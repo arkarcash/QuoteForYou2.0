@@ -318,7 +318,7 @@ class AuthController extends Controller
     {
         $request->validate([
             'name' => 'nullable|string',
-            'email' => 'nullable|email|unique:users,email'
+            'email' => 'nullable|email|unique:users,email,'.Auth::id()
         ]);
 
         $user = User::where('id',Auth::guard('sanctum')->id())->first();
