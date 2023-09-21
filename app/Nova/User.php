@@ -82,6 +82,10 @@ class User extends Resource
                 );
             })->asHtml(),
 
+            Text::make('Photo','photo')
+                ->sortable()
+                ->rules('required', 'max:255')->showOnUpdating(),
+
             HasOne::make('certificate')->showOnDetail()->hideWhenCreating()->hideWhenUpdating(),
 
             Number::make('Point','points')->hideFromDetail()->hideFromIndex(),
