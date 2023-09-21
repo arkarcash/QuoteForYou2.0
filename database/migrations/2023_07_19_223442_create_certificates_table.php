@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('mentor')->nullable();
             $table->string('guru')->nullable();
             $table->string('mystery')->nullable();
+
             $table->string('creator')->nullable();
             $table->string('specialist')->nullable();
             $table->string('collaborator')->nullable();

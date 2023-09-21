@@ -55,12 +55,22 @@ class Certificate extends Resource
                         ? asset('/storage/certificates/'.$value)
                         : null;
                 }),
+
             Image::make('Guru','guru')
                 ->preview(function ($value, $disk) {
                     return $value
                         ? asset('/storage/certificates/'.$value)
                         : null;
                 }),
+
+            Image::make('Mentor','mentor')
+                ->preview(function ($value, $disk) {
+                    return $value
+                        ? asset('/storage/certificates/'.$value)
+                        : null;
+                }),
+
+
             Image::make('Mystery','mystery')
                 ->preview(function ($value, $disk) {
                     return $value
@@ -73,12 +83,7 @@ class Certificate extends Resource
                         ? asset('/storage/certificates/'.$value)
                         : null;
                 }),
-            Image::make('Specialist','specialist')
-                ->preview(function ($value, $disk) {
-                    return $value
-                        ? asset('/storage/certificates/'.$value)
-                        : null;
-                }),
+
             Image::make('Specialist','specialist')
                 ->preview(function ($value, $disk) {
                     return $value

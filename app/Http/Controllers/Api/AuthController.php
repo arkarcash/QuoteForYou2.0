@@ -172,17 +172,17 @@ class AuthController extends Controller
                 break;
             case 3000:
                 if ($certificate->guru == null ){
-                    $user->photo = '3_mentor.png';
+                    $user->photo = '4_guru.png';
                     $user->update();
-                    $certificateBg = Image::make('CertificateFrame/'.$bgFrames[2]);
+                    $certificateBg = Image::make('CertificateFrame/'.$bgFrames[3]);
                     self::makeCertificate($certificateBg,$certificate,'mentor',$fontForLevelOneToFive,$fontSizeForLevelOneToFive,$leftDateWidthForLevelOneToFive);
                 }
                 break;
             case 6000:
                 if ($certificate->mentor == null ){
-                    $user->photo = '4_guru.png';
+                    $user->photo = '3_mentor.png';
                     $user->update();
-                    $certificateBg = Image::make('CertificateFrame/'.$bgFrames[3]);
+                    $certificateBg = Image::make('CertificateFrame/'.$bgFrames[2]);
                     self::makeCertificate($certificateBg,$certificate,'guru',$fontForLevelOneToFive,$fontSizeForLevelOneToFive,$leftDateWidthForLevelOneToFive);
                 }
                 break;
