@@ -77,7 +77,7 @@ class UserDetailResource extends JsonResource
                 ],
                 [
                     'rank_name' => 'Guru',
-                    'rank_photo' =>  asset('Ranks/'.$rankPhoto[3]),
+                    'rank_photo' =>  asset('Ranks/'.$rankPhoto[4]),
 
                     'need_point' => 3000,
                     'is_arrived' => $this->points >= 3000,
@@ -87,7 +87,7 @@ class UserDetailResource extends JsonResource
                 ],
                 [
                     'rank_name' => 'Mentor',
-                    'rank_photo' =>  asset('Ranks/'.$rankPhoto[4]),
+                    'rank_photo' =>  asset('Ranks/'.$rankPhoto[3]),
 
                     'need_point' => 6000,
                     'is_arrived' => $this->points >= 6000,
