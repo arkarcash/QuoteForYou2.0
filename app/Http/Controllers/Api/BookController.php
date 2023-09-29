@@ -157,11 +157,13 @@ class BookController extends Controller
 
 
         foreach ($authors as $note){
-            if (!in_array($note['id'],$ids)){
-                $id = $note['id'];
-                array_push($ids,$id);
-                $new = [ 'id' => $note['id'] , 'name' => $note['name']];
-                array_push($arrays,$new);
+            if ($note['id'] != null){
+                if (!in_array($note['id'],$ids)){
+                    $id = $note['id'];
+                    array_push($ids,$id);
+                    $new = [ 'id' => $note['id'] , 'name' => $note['name']];
+                    array_push($arrays,$new);
+                }
             }
         }
 
