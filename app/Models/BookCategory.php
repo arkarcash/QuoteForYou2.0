@@ -14,9 +14,10 @@ class BookCategory extends Model
 
     public function books()
     {
-        return $this->hasMany(Book::class,'book_category_id','id')
-            ->with(['users' => function($u){
-            return $u->where('user_id',Auth::guard('sanctum')->id())->wherePivot('expire_date','>=',today());
-        }])->take(20);
+        return $this->hasMany(Book::class,'book_category_id','id')->take(20);
     }
+
+//->with(['users' => function($u){
+//    return $u->where('user_id',Auth::guard('sanctum')->id())->wherePivot('expire_date','>=',today());
+//}])->
 }
