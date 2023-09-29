@@ -76,9 +76,10 @@ class BookController extends Controller
 
         $user = User::where('id',Auth::guard('sanctum')->id())->first();
 
-        $check = $user->whereHas('books',function ($q) use ($book_id){
+        $check = User::where('id',Auth::guard('sanctum')->id())->whereHas('books',function ($q) use ($book_id){
             return $q->where('book_id',$book_id);
         })->exists();
+
 
         if($check){
             $book =  $user->books()->where('book_id',$book_id)->withPivot('expire_date','created_at')->first();
@@ -86,7 +87,6 @@ class BookController extends Controller
             $date = Carbon::make($book->pivot->expire_date);
             $primaryDate = $book->pivot->created_at;
             $user->books()->detach($book_id);
-
 
             if ($date->gte(today())){
                 $user->books()->attach( $book_id , ['expire_date' => $date->addWeek(),'created_at' => $primaryDate , 'updated_at' => now()]);
