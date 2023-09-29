@@ -155,9 +155,9 @@ class BookController extends Controller
         $arrays = [];
         $authors = Note::where('is_poem',1)->with('author:id,name')->get()->pluck('author')->toArray();
 
-
         foreach ($authors as $note){
-            if ($note['id'] != null){
+            if ($note != null){
+
                 if (!in_array($note['id'],$ids)){
                     $id = $note['id'];
                     array_push($ids,$id);
