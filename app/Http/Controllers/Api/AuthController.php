@@ -41,7 +41,7 @@ class AuthController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'max:255','unique:users,email'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
-            'fcm_token_key' => ['required']
+            'fcm_token_key' => ['nullable']
         ]);
 
 
@@ -58,9 +58,9 @@ class AuthController extends Controller
             if (isset($validate->failed()['password']['Confirmed'])){
                 return $this->fail('Password Confirmation Error');
             }
-            if (isset($validate->failed()['fcm_token_key'])){
-                return $this->fail('FCM Token Required');
-            }
+//            if (isset($validate->failed()['fcm_token_key'])){
+//                return $this->fail('FCM Token Required');
+//            }
             return $this->fail( $validate->getMessageBag());
         }
 
@@ -71,7 +71,10 @@ class AuthController extends Controller
         $user->save();
 
         $token = $user->createToken('api_user')->plainTextToken;
-        $this->insertToken($request->fcm_token_key,$user->id);
+
+        if ($request->fcm_token_key != null){
+            $this->insertToken($request->fcm_token_key,$user->id);
+        }
 
         Auth::login($user);
 
@@ -88,7 +91,7 @@ class AuthController extends Controller
         $validate = Validator::make($request->all(), [
             'email' => ['required', 'string', 'max:255'],
             'password' => ['required', 'string'],
-            'fcm_token_key' => ['required']
+            'fcm_token_key' => ['nullable']
         ]);
 
 
@@ -99,9 +102,9 @@ class AuthController extends Controller
             if (isset($validate->failed()['password'])){
                 return $this->fail('Password Required');
             }
-            if (isset($validate->failed()['fcm_token_key'])){
-                return $this->fail('FCM Token Required');
-            }
+//            if (isset($validate->failed()['fcm_token_key'])){
+//                return $this->fail('FCM Token Required');
+//            }
             return $this->fail( $validate->getMessageBag());
 
         }
@@ -112,7 +115,9 @@ class AuthController extends Controller
 
         if(Auth::attempt(['email' => $request->email , 'password' => $request->password])){
 
-            $this->insertToken($request->fcm_token_key,Auth::id());
+            if ($request->fcm_token_key != null){
+                $this->insertToken($request->fcm_token_key,Auth::id());
+            }
 
             $token = Auth::guard('sanctum')->user()->createToken('api_user')->plainTextToken;
             return response()

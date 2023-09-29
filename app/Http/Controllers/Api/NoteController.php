@@ -40,10 +40,13 @@ class NoteController extends Controller
                     return $q->withCount(['users' => function($u){
                         return $u->where('user_id',Auth::guard('sanctum')->id());
                     }]);
-                })->where('is_poem',1)->with('author','tags')
-                    ->when(isset($request->trending),function ($q) use ($request){
+                })
+                ->where('is_poem',1)
+                ->with('author','tags')
+                ->when(isset($request->trending),function ($q) use ($request){
                         return $q->orderBy('view','desc');
-                })->orderBy('id','desc')->paginate(10);
+                })
+                ->orderBy('id','desc')->paginate(10);
 
            $meta = [
                 'total' => $poems->total(),
