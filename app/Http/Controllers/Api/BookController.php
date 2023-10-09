@@ -106,6 +106,9 @@ class BookController extends Controller
         $books = Book::whereHas('users',function($u){
                 return $u->where('user_id',Auth::guard('sanctum')->id());
             })
+            ->whereHas('users',function ($q){
+                return $q->where('user_id',Auth::guard('sanctum')->id())->where('expire_date','>=',today());
+            })
             ->with(['users' => function($u){
                 return $u->where('user_id',Auth::guard('sanctum')->id())->wherePivot('expire_date','>=',today());
             }])
