@@ -181,15 +181,15 @@ class AuthController extends Controller
         if ($user->points >= 3000 && $certificate->guru == null ){
 
             $user->photo = '4_guru.png';
-                    $user->update();
-                    $certificateBg = Image::make('CertificateFrame/'.$bgFrames[3]);
-                    self::makeCertificate($certificateBg,$certificate,'guru',$fontForLevelOneToFive,$fontSizeForLevelOneToFive,$leftDateWidthForLevelOneToFive,$levelOneToFiveHight);
-                }
+            $user->update();
+            $certificateBg = Image::make('CertificateFrame/'.$bgFrames[2]);
+            self::makeCertificate($certificateBg,$certificate,'guru',$fontForLevelOneToFive,$fontSizeForLevelOneToFive,$leftDateWidthForLevelOneToFive,$levelOneToFiveHight);
+        }
 
         if ($user->points >= 6000 && $certificate->mentor == null ){
             $user->photo = '3_mentor.png';
             $user->update();
-            $certificateBg = Image::make('CertificateFrame/'.$bgFrames[2]);
+            $certificateBg = Image::make('CertificateFrame/'.$bgFrames[3]);
             self::makeCertificate($certificateBg,$certificate,'mentor',$fontForLevelOneToFive,$fontSizeForLevelOneToFive,$leftDateWidthForLevelOneToFive,$levelOneToFiveHight);
      }
 
@@ -209,10 +209,10 @@ class AuthController extends Controller
 
         if ($user->points >= 40000 && $certificate->specialist == null ){
             $user->photo = '7_Specialist.png';
-                    $user->update();
-                    $certificateBg = Image::make('CertificateFrame/'.$bgFrames[6]);
-                    self::makeCertificate($certificateBg,$certificate,'specialist',$fontForLevelFiveToTen,$fontSizeForLevelFiveToTen,$leftDateWidthForLevelFiveToTen,$levelFiveToTenHight);
-               }
+            $user->update();
+            $certificateBg = Image::make('CertificateFrame/'.$bgFrames[6]);
+            self::makeCertificate($certificateBg,$certificate,'specialist',$fontForLevelFiveToTen,$fontSizeForLevelFiveToTen,$leftDateWidthForLevelFiveToTen,$levelFiveToTenHight);
+        }
 
         if ($user->points >= 80000 && $certificate->collaborator == null ){
 
