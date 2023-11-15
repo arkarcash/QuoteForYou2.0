@@ -2,6 +2,7 @@
 
 namespace App\Jobs;
 
+use App\Http\Controllers\AdsController;
 use App\Models\Fcmtokenkey;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldBeUnique;
@@ -35,28 +36,6 @@ class NotificationSend implements ShouldQueue
      */
     public function handle()
     {
-        $url = 'https://fcm.googleapis.com/fcm/send';
-        $serverKey = config('app.firebase.server_key');
-
-        $fcm_user_key = Fcmtokenkey::all();
-        logger($this->message);
-
-        foreach ($fcm_user_key as $key){
-
-            $notificaions = [
-                'title' => $this->title,
-                'body' => $this->message,
-                'badge' => 1,
-            ];
-
-            Http::withHeaders([
-                'Authorization' => "key={$serverKey}",
-                'Content-Type' => "application/json"
-            ])->post($url, [
-                'to' => $key->token,
-                'notification' => $notificaions,
-            ]);
-
-        }
+        AdsController::sendPushNotification($this->title,$this->message);
     }
 }

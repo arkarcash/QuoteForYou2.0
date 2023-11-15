@@ -17,7 +17,7 @@ class MessageObserver
      */
     public function created(message $message)
     {
-
+        logger($message);
 //        NotificationSend::dispatch($message->title,$message->description);
         NotificationSend::dispatch('Dear, Clickers','Stay Safety Places');
 
