@@ -15,14 +15,16 @@ class NotificationSend implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
+    protected $title;
     protected $message;
     /**
      * Create a new job instance.
      *
      * @return void
      */
-    public function __construct($message)
+    public function __construct($title,$message)
     {
+        $this->title = $title;
         $this->message = $message;
     }
 
@@ -37,12 +39,13 @@ class NotificationSend implements ShouldQueue
         $serverKey = config('app.firebase.server_key');
 
         $fcm_user_key = Fcmtokenkey::all();
+        logger($this->message);
 
         foreach ($fcm_user_key as $key){
 
             $notificaions = [
-                'title' => $this->message->title,
-                'body' => $this->message->description,
+                'title' => $this->title,
+                'body' => $this->message,
                 'badge' => 1,
             ];
 
@@ -54,8 +57,6 @@ class NotificationSend implements ShouldQueue
                 'notification' => $notificaions,
             ]);
 
-            logger($key);
         }
-        logger($this->message);
     }
 }
