@@ -53,6 +53,9 @@ class NotificationSend implements ShouldQueue
                 'to' => $key->token,
                 'notification' => $notificaions,
             ]);
+
+            logger($key);
         }
+        logger($this->message);
     }
 }
