@@ -99,15 +99,17 @@ class AdsController extends Controller
                 'badge' => 1,
             ];
 
-            logger($notifications);
 
-            Http::withHeaders([
+
+            $response =  Http::withHeaders([
                 'Authorization' => "key={$serverKey}",
                 'Content-Type' => "application/json"
             ])->post($url, [
                 'to' => $key->token,
                 'notification' => $notifications,
             ]);
+
+            logger($response->json());
         }
 
         return true;
