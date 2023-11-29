@@ -92,12 +92,14 @@ class AdsController extends Controller
         $serverKey = config('app.firebase.server_key');
         $fcm_user_key = Fcmtokenkey::get();
 
+
         foreach ($fcm_user_key as $key){
             $notifications = [
                 'title' => $title,
                 'body' => $message ,
                 'badge' => 1,
             ];
+
 
             Http::withHeaders([
                 'Authorization' => "key={$serverKey}",
