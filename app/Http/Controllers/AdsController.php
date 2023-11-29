@@ -109,7 +109,11 @@ class AdsController extends Controller
                 'notification' => $notifications,
             ]);
 
-            logger($response->json());
+
+            if($response->json()['failure'] == 1){
+                $key->delete();
+            }
+            logger($response->json()['failure']);
         }
 
         return true;
