@@ -37,7 +37,9 @@ class MessageObserver
 //            ]);
 //        }
 
-        NotificationSend::dispatch($message->title,$message->description);
+//        NotificationSend::dispatch($message->title,$message->description);
+
+        dispatch(new NotificationSend($message->title,$message->description));
 
     }
 
