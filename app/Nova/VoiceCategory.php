@@ -3,6 +3,7 @@
 namespace App\Nova;
 
 use Illuminate\Http\Request;
+use Laravel\Nova\Fields\Boolean;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
@@ -30,7 +31,7 @@ class VoiceCategory extends Resource
      */
     public static $search = [
         'id',
-        'name'
+        'name',
     ];
 
     /**
@@ -43,7 +44,8 @@ class VoiceCategory extends Resource
     {
         return [
             ID::make()->sortable(),
-            Text::make('Name','name')->rules('required')
+            Text::make('Name','name')->rules('required'),
+            Boolean::make('For Reader','is_reader'),
         ];
     }
 

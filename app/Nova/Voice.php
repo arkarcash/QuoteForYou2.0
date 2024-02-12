@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Laravel\Nova\Fields\BelongsTo;
+use Laravel\Nova\Fields\Boolean;
 use Laravel\Nova\Fields\File;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Image;
@@ -50,11 +51,15 @@ class Voice extends Resource
     {
         return [
             ID::make()->sortable(),
+
             Text::make('Title','title')->rules('required'),
+
             Markdown::make('Description','description')->rules('required'),
+
             BelongsTo::make('Voice Category','voiceCategory')->withoutTrashed(),
 
             Number::make('Total Views','view'),
+
             Image::make('photo')
                 ->disk('public')
                 ->path('book')
@@ -68,6 +73,9 @@ class Voice extends Resource
                 })
                 ->prunable()
                 ->creationRules('required','image')->updateRules('nullable','image'),
+
+            Boolean::make('For Reader','is_reader'),
+
         ];
     }
 

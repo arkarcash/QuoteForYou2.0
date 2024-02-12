@@ -102,6 +102,12 @@ class NoteController extends Controller
                         ->when(isset($request->category_id),function ($q) use ($request){
                             return $q->where('voice_category_id',$request->category_id);
                         })
+                        ->when($request->is_reader,function ($q){
+                            return $q->where('is_reader',true);
+                        })
+                        ->unless($request->is_reader,function ($q){
+                            return $q->where('is_reader',false);
+                        })
                         ->when(isset($request->trending),function ($q) use ($request){
                             return $q->orderBy('view','desc');
                         })->orderBy('id','desc')->paginate(10);
@@ -115,12 +121,17 @@ class NoteController extends Controller
         return $this->success(VoiceResource::collection($voices),$meta);
     }
 
-    public function voiceCategories()
+    public function voiceCategories(Request $request)
     {
-        $categories = VoiceCategory::get();
+        $categories = VoiceCategory::
+                    when($request->is_reader,function ($q){
+                        return $q->where('is_reader',true);
+                    })
+                    ->unless($request->is_reader,function ($q){
+                        return $q->where('is_reader',false);
+                    })->get();
         return $this->success(VoiceCategoryResource::collection($categories));
     }
-
 
 
     public function toggleSaveNote($note_id)
