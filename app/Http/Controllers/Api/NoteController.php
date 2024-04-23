@@ -43,10 +43,11 @@ class NoteController extends Controller
                 })
                 ->where('is_poem',1)
                 ->with('author','tags')
-                ->when(isset($request->trending),function ($q) use ($request){
-                        return $q->orderBy('view','desc');
+                ->when((isset($request->trending) && $request->trending == '1'),function ($q) use ($request){
+                    return $q->orderBy('view','desc');
                 })
-                ->orderBy('id','desc')->paginate(10);
+                ->orderBy('id','desc')
+                ->paginate(10);
 
            $meta = [
                 'total' => $poems->total(),
@@ -83,9 +84,10 @@ class NoteController extends Controller
                         return $t->where('name','LIKE',"%$request->keyword%");
                     });
                 })
-                ->when(isset($request->trending),function ($q) use ($request){
+                ->when((isset($request->trending) && $request->trending == '1'),function ($q) use ($request){
                     return $q->orderBy('view','desc');
-                })->orderBy('id','desc')->paginate(10);
+                })
+                ->orderBy('id','desc')->paginate(10);
 
         $meta = [
             'total' => $quote->total(),
