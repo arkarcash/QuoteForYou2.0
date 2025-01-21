@@ -132,7 +132,6 @@ class AuthController extends Controller
     {
         $user = User::where('id',Auth::id())->first();
         $user->increment('points',$points);
-        DB::beginTransaction();
 
         try{
 
@@ -165,6 +164,7 @@ class AuthController extends Controller
             '10.-QFY-(Legend)-(FOR-APP).png'
         ];
         if ($user->points >= 500 && $certificate->contributor == null){
+            logger($user);
             $user->photo = '1_contributor.png';
             $user->update();
             $certificateBg = Image::make('CertificateFrame/'.$bgFrames[0]);
@@ -237,12 +237,10 @@ class AuthController extends Controller
             self::makeCertificate($certificateBg,$certificate,'legend',$fontForLevelFiveToTen,$fontSizeForLevelFiveToTen,$leftDateWidthForLevelFiveToTen,$levelFiveToTenHight);
        }
 
-        DB::commit();
         return $this->success(UserResource::make(Auth::user()->refresh()));
 
         }catch (Exception $e) {
             logger($e->getMessage());
-            DB::rollBack();
             return $this->fail($e->getMessage());
         }
 
