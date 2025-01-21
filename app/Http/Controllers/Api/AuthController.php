@@ -130,12 +130,11 @@ class AuthController extends Controller
 
     public function addPoint($points)
     {
+        $user = User::where('id',Auth::id())->first();
+        $user->increment('points',$points);
         DB::beginTransaction();
 
         try{
-
-        $user = User::where('id',Auth::id())->first();
-        $user->increment('points',$points);
 
         $certificate = Certificate::where('user_id',Auth::guard('sanctum')->id())->first();
         if ($certificate == null){
