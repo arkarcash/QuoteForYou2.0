@@ -8,10 +8,8 @@ use App\Http\Resources\UserDetailResource;
 use App\Http\Resources\UserResource;
 use App\Models\Certificate;
 use App\Models\Fcmtokenkey;
-use App\Models\Order;
 use App\Models\User;
 use Exception;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -132,6 +130,10 @@ class AuthController extends Controller
 
     public function addPoint($points)
     {
+        DB::beginTransaction();
+
+        try{
+
         $user = User::where('id',Auth::id())->first();
         $user->increment('points',$points);
 
@@ -163,7 +165,6 @@ class AuthController extends Controller
             '9.-QFY-(Authority)-(FOR-APP).png',
             '10.-QFY-(Legend)-(FOR-APP).png'
         ];
-
         if ($user->points >= 500 && $certificate->contributor == null){
             $user->photo = '1_contributor.png';
             $user->update();
@@ -237,7 +238,15 @@ class AuthController extends Controller
             self::makeCertificate($certificateBg,$certificate,'legend',$fontForLevelFiveToTen,$fontSizeForLevelFiveToTen,$leftDateWidthForLevelFiveToTen,$levelFiveToTenHight);
        }
 
+        DB::commit();
         return $this->success(UserResource::make(Auth::user()->refresh()));
+
+        }catch (Exception $e) {
+            logger($e->getMessage());
+            DB::rollBack();
+            return $this->fail($e->getMessage());
+        }
+
     }
 
     public static function makeCertificate($imagePath,$certificate,$levelName,$customFont,$fontSize,$leftWidth,$height)
@@ -253,6 +262,7 @@ class AuthController extends Controller
             $uniqueID = "CLICK_FOR_FREEDOM_".Str::orderedUuid();
             $name = Str::ucfirst(Auth::guard('sanctum')->user()->name);
             $date = now()->format('d F, Y');
+
             $main = $imagePath
                 ->text($name, $imagePath->width() / 2, $imagePath->height() / 1.6, function($font)  use ($customFont,$fontSize){
                 $font->file(public_path('Fonts/'.$customFont));
@@ -266,7 +276,7 @@ class AuthController extends Controller
                 $font->color('#306FB6');
             });
 
-            $path = public_path('storage/certificates/');
+            $path = storage_path('/app/public/certificates/');
             $name = $path.$uniqueID.'.png';
             $main->save($name,100);
 
@@ -277,7 +287,7 @@ class AuthController extends Controller
             return true;
 
         }catch(Exception $err){
-
+            logger($err->getMessage());
             DB::rollBack();
             return false;
         }
