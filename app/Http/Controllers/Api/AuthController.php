@@ -281,7 +281,6 @@ class AuthController extends Controller
 
             $certificate->$levelName = $uniqueID.'.png';
             $certificate->update();
-            logger('Success',$certificate);
             DB::commit();
             return true;
 
