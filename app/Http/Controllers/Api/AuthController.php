@@ -254,7 +254,7 @@ class AuthController extends Controller
         if(!Storage::exists("public/certificates")){
             Storage::makeDirectory("public/certificates");
         }
-
+        logger('Start certificate');
         DB::beginTransaction();
 
         try{
@@ -262,6 +262,8 @@ class AuthController extends Controller
             $uniqueID = "CLICK_FOR_FREEDOM_".Str::orderedUuid();
             $name = Str::ucfirst(Auth::guard('sanctum')->user()->name);
             $date = now()->format('d F, Y');
+
+            logger('DOing certificate');
 
             $main = $imagePath
                 ->text($name, $imagePath->width() / 2, $imagePath->height() / 1.6, function($font)  use ($customFont,$fontSize){
@@ -282,7 +284,7 @@ class AuthController extends Controller
 
             $certificate->$levelName = $uniqueID.'.png';
             $certificate->update();
-
+            logger('Success',$certificate);
             DB::commit();
             return true;
 
